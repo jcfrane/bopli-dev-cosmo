@@ -1,0 +1,18 @@
+name: Release theme
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    uses: jcfrane/bopli-theme-toolkit/.github/workflows/release-theme.yml@v0.1.0
+    with:
+      toolkit-version: '0.1.0'
+      asset-base-url: ${{ vars.THEME_ASSET_BASE_URL }}
+    secrets:
+      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+      R2_BUCKET: ${{ secrets.R2_BUCKET }}

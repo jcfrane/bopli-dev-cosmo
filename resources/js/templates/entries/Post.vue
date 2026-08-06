@@ -1,8 +1,28 @@
+<bopli lang="json">
+{
+  "name": "Cosmo post",
+  "fields": {
+    "excerpt": { "name": "Excerpt", "type": "long_text", "required": true },
+    "body": { "name": "Body", "type": "rich_text", "required": true },
+    "readTime": { "name": "Read time", "type": "number" },
+    "featureImage": { "name": "Feature image", "type": "image" }
+  }
+}
+</bopli>
+
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3";
+import SiteFooter from "../../components/SiteFooter.vue";
+import SiteHeader from "../../components/SiteHeader.vue";
+import Starfield from "../../components/Starfield.vue";
 
 type SocialLink = { label: string; url: string };
 type Term = { name: string; slug: string };
+type EntryImage = {
+  url: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+};
 
 const props = defineProps<{
   site: {
@@ -25,10 +45,10 @@ const props = defineProps<{
     excerpt: string;
     body: string;
     readTime?: number;
+    featureImage?: EntryImage | null;
   };
 }>();
 
-const year = new Date().getFullYear();
 const publishedDate = props.entry.publishedAt
   ? new Intl.DateTimeFormat("en", {
       month: "long",
@@ -39,25 +59,11 @@ const publishedDate = props.entry.publishedAt
 </script>
 
 <template>
-  <Head :title="entry.seoTitle ?? entry.title">
-    <meta
-      v-if="entry.seoDescription"
-      head-key="description"
-      name="description"
-      :content="entry.seoDescription"
-    />
-    <link
-      head-key="canonical"
-      rel="canonical"
-      :href="site.canonicalUrl + entry.canonicalPath"
-    />
-  </Head>
   <div class="cosmo-shell">
-    <div class="stars" aria-hidden="true" />
-    <header>
-      <a class="brand" href="/"><span>◉</span>{{ site.name }}</a>
-      <a class="back" href="/">← Return to orbit</a>
-    </header>
+    <Starfield variant="subtle" />
+    <SiteHeader :site-name="site.name">
+      <a href="/blog">Writing</a><a class="back" href="/">← Return to orbit</a>
+    </SiteHeader>
     <main>
       <article>
         <div class="post-heading">
@@ -74,10 +80,16 @@ const publishedDate = props.entry.publishedAt
             </span>
           </div>
         </div>
+        <img
+          v-if="entry.featureImage"
+          class="hero-image"
+          :src="entry.featureImage.url"
+          :alt="entry.featureImage.alt ?? ''"
+        />
         <div class="body" v-html="entry.body" />
       </article>
     </main>
-    <footer>© {{ year }} {{ site.name }}. Powered by Bopli.</footer>
+    <SiteFooter :site-name="site.name" :social-links="site.socialLinks" />
   </div>
 </template>
 
@@ -111,45 +123,14 @@ const publishedDate = props.entry.publishedAt
     ),
     #08050f;
 }
-.stars {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.22;
-  background-image: radial-gradient(#fff 0.7px, transparent 0.7px);
-  background-size: 34px 34px;
-}
-header,
-main,
-footer {
+main {
   position: relative;
   z-index: 1;
   width: min(1120px, calc(100% - 40px));
   margin: 0 auto;
 }
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 28px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-}
-.brand,
-.back {
-  text-decoration: none;
-}
-.brand {
-  display: flex;
-  gap: 10px;
-  font-weight: 700;
-}
-.brand span,
-.eyebrow {
-  color: var(--orange);
-}
 .back {
   color: #c9bfce;
-  font-size: 0.9rem;
 }
 article {
   padding: clamp(70px, 10vw, 130px) 0;
@@ -160,6 +141,7 @@ article {
   margin: 0 auto;
 }
 .eyebrow {
+  color: var(--orange);
   font-family: ui-monospace, monospace;
   font-size: 0.75rem;
   letter-spacing: 0.16em;
@@ -192,6 +174,14 @@ h1 {
   color: #d48ccc;
   border: 1px solid rgba(212, 140, 204, 0.3);
 }
+.hero-image {
+  display: block;
+  width: min(980px, 100%);
+  margin: clamp(45px, 6vw, 75px) auto 0;
+  aspect-ratio: 1200 / 630;
+  object-fit: cover;
+  border: 1px solid rgba(212, 140, 204, 0.3);
+}
 .body {
   margin-top: clamp(55px, 8vw, 90px);
   color: #ded6e2;
@@ -222,19 +212,29 @@ h1 {
   border-radius: 4px;
   background: rgba(119, 33, 111, 0.35);
 }
-footer {
-  padding: 35px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  color: #8f8597;
-  font-size: 0.82rem;
+.body :deep(pre) {
+  padding: 20px;
+  overflow-x: auto;
+  background: #120a1d;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
-@media (max-width: 640px) {
-  .back {
-    font-size: 0;
-  }
-  .back::after {
-    content: "← Home";
-    font-size: 0.85rem;
-  }
+.body :deep(pre code) {
+  padding: 0;
+  background: none;
+}
+.body :deep(hr) {
+  margin: 3em auto;
+  width: 120px;
+  border: 0;
+  border-top: 1px solid rgba(212, 140, 204, 0.4);
+}
+.body :deep(img) {
+  max-width: 100%;
+  height: auto;
+  margin: 2em 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.body :deep(s) {
+  color: #9f93a8;
 }
 </style>

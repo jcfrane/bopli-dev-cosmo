@@ -1,8 +1,27 @@
+<bopli lang="json">
+{
+  "name": "Cosmo home",
+  "slots": {
+    "featured_post": { "name": "Featured post" },
+    "recent_posts": { "name": "Recent posts" },
+    "featured_projects": { "name": "Featured projects" }
+  }
+}
+</bopli>
+
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3";
+import SiteFooter from "../../components/SiteFooter.vue";
+import SiteHeader from "../../components/SiteHeader.vue";
+import Starfield from "../../components/Starfield.vue";
 
 type SocialLink = { label: string; url: string };
 type Term = { name: string; slug: string };
+type EntryImage = {
+  url: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+};
 type Entry = {
   title: string;
   slug: string;
@@ -11,6 +30,7 @@ type Entry = {
   readTime?: number;
   summary?: string;
   url?: string;
+  featureImage?: EntryImage | null;
   terms?: Record<string, Term[]>;
 };
 
@@ -37,7 +57,6 @@ defineProps<{
   };
 }>();
 
-const year = new Date().getFullYear();
 function date(value?: string): string {
   return value
     ? new Intl.DateTimeFormat("en", {
@@ -50,30 +69,12 @@ function date(value?: string): string {
 </script>
 
 <template>
-  <Head :title="page.seoTitle ?? site.name">
-    <meta
-      v-if="page.seoDescription ?? site.description"
-      head-key="description"
-      name="description"
-      :content="page.seoDescription ?? site.description"
-    />
-    <link
-      head-key="canonical"
-      rel="canonical"
-      :href="site.canonicalUrl + page.path"
-    />
-  </Head>
   <div class="cosmo-shell">
-    <div class="stars" aria-hidden="true" />
-    <header class="site-header">
-      <a class="brand" href="/"
-        ><span class="brand-mark">◉</span>{{ site.name }}</a
-      >
-      <nav aria-label="Primary">
-        <a href="#writing">Writing</a><a href="#projects">Projects</a
-        ><a href="#about">About</a>
-      </nav>
-    </header>
+    <Starfield variant="dense" />
+    <SiteHeader :site-name="site.name">
+      <a href="/blog">Writing</a><a href="#projects">Projects</a
+      ><a href="#about">About</a>
+    </SiteHeader>
 
     <main>
       <section class="hero" id="about">
@@ -102,14 +103,14 @@ function date(value?: string): string {
             <p class="eyebrow">Latest transmission</p>
             <h2>Writing</h2>
           </div>
-          <span class="frequency">88.04 MHz</span>
+          <a class="all-posts" href="/blog">All transmissions →</a>
         </div>
         <a
           v-if="slots.featured_post?.[0]"
           class="featured-post"
           :href="slots.featured_post[0].url"
         >
-          <div>
+          <div class="featured-copy">
             <p class="meta">
               {{ date(slots.featured_post[0].publishedAt)
               }}<template v-if="slots.featured_post[0].readTime">
@@ -118,8 +119,15 @@ function date(value?: string): string {
             </p>
             <h3>{{ slots.featured_post[0].title }}</h3>
             <p>{{ slots.featured_post[0].excerpt }}</p>
+            <span class="arrow">↗</span>
           </div>
-          <span class="arrow">↗</span>
+          <img
+            v-if="slots.featured_post[0].featureImage"
+            class="featured-image"
+            :src="slots.featured_post[0].featureImage.url"
+            :alt="slots.featured_post[0].featureImage.alt ?? ''"
+            loading="lazy"
+          />
         </a>
         <div v-else class="empty-signal">
           <span>···</span>
@@ -131,6 +139,13 @@ function date(value?: string): string {
             :key="post.slug"
             :href="post.url"
           >
+            <img
+              v-if="post.featureImage"
+              class="card-image"
+              :src="post.featureImage.url"
+              :alt="post.featureImage.alt ?? ''"
+              loading="lazy"
+            />
             <p class="meta">{{ date(post.publishedAt) }}</p>
             <h3>{{ post.title }}</h3>
             <p>{{ post.excerpt }}</p>
@@ -170,19 +185,7 @@ function date(value?: string): string {
       </section>
     </main>
 
-    <footer>
-      <p>© {{ year }} {{ site.name }}. Powered by Bopli.</p>
-      <div>
-        <a
-          v-for="link in site.socialLinks"
-          :key="link.url"
-          :href="link.url"
-          rel="me noreferrer"
-          target="_blank"
-          >{{ link.label }}</a
-        >
-      </div>
-    </footer>
+    <SiteFooter :site-name="site.name" :social-links="site.socialLinks" />
   </div>
 </template>
 
@@ -218,60 +221,11 @@ function date(value?: string): string {
     ),
     linear-gradient(160deg, #10091e 0%, var(--ink) 44%, #0d0718 100%);
 }
-.stars {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image:
-    radial-gradient(#fff 0.7px, transparent 0.8px),
-    radial-gradient(#e7bcff 0.6px, transparent 0.7px);
-  background-position:
-    0 0,
-    18px 24px;
-  background-size:
-    63px 63px,
-    91px 91px;
-  mask-image: linear-gradient(to bottom, #000, transparent 72%);
-}
-.site-header,
-main,
-footer {
+main {
   position: relative;
   z-index: 1;
   width: min(1160px, calc(100% - 40px));
   margin-inline: auto;
-}
-.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 30px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-}
-.brand {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: -0.02em;
-}
-.brand-mark {
-  color: var(--orange);
-  text-shadow: 0 0 20px var(--orange);
-}
-.site-header nav {
-  display: flex;
-  gap: 30px;
-}
-.site-header nav a {
-  color: #bcb3c5;
-  font-size: 0.85rem;
-  text-decoration: none;
-}
-.site-header nav a:hover {
-  color: white;
 }
 .hero {
   min-height: 690px;
@@ -284,8 +238,7 @@ footer {
   max-width: 720px;
 }
 .eyebrow,
-.meta,
-.frequency {
+.meta {
   color: #d48ccc;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.72rem;
@@ -399,6 +352,14 @@ footer {
   font-size: clamp(2.2rem, 5vw, 4.5rem);
   letter-spacing: -0.05em;
 }
+.all-posts {
+  color: #d48ccc;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+.all-posts:hover {
+  color: #fff;
+}
 .featured-post {
   display: flex;
   justify-content: space-between;
@@ -420,10 +381,15 @@ footer {
   border-color: rgba(233, 84, 32, 0.7);
   transform: translateY(-3px);
 }
+.featured-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .featured-post h3 {
   max-width: 770px;
   margin: 12px 0;
-  font-size: clamp(2rem, 4vw, 4rem);
+  font-size: clamp(1.8rem, 3.5vw, 3.2rem);
   line-height: 1.05;
   letter-spacing: -0.04em;
 }
@@ -433,7 +399,16 @@ footer {
   color: #bcb3c5;
   line-height: 1.65;
 }
+.featured-image {
+  width: min(38%, 420px);
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border: 1px solid rgba(212, 140, 204, 0.35);
+  align-self: center;
+}
 .arrow {
+  margin-top: auto;
+  padding-top: 18px;
   color: var(--orange);
   font-size: 2rem;
 }
@@ -459,6 +434,13 @@ footer {
 }
 .post-grid a:hover {
   background: #1a0d25;
+}
+.card-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 .post-grid h3,
 .project-grid h3 {
@@ -511,26 +493,7 @@ footer {
 .empty-signal span {
   color: var(--orange);
 }
-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 25px;
-  padding: 40px 0;
-  color: #8f8499;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  font-size: 0.82rem;
-}
-footer div {
-  display: flex;
-  gap: 20px;
-}
-footer a {
-  text-decoration: none;
-}
 @media (max-width: 800px) {
-  .site-header nav {
-    display: none;
-  }
   .hero {
     min-height: auto;
     grid-template-columns: 1fr;
@@ -547,6 +510,12 @@ footer a {
     width: 80vw;
     opacity: 0.4;
   }
+  .featured-post {
+    flex-direction: column;
+  }
+  .featured-image {
+    width: 100%;
+  }
   .post-grid,
   .project-grid {
     grid-template-columns: 1fr;
@@ -554,12 +523,6 @@ footer a {
   .signal,
   .projects {
     padding: 75px 0;
-  }
-  .frequency {
-    display: none;
-  }
-  footer {
-    flex-direction: column;
   }
 }
 </style>

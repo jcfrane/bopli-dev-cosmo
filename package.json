@@ -1,0 +1,11 @@
+{
+    "name": "@bopli-theme/dev-cosmo",
+    "private": true,
+    "version": "0.3.0",
+    "type": "module",
+    "scripts": {
+        "validate": "node ../bopli-theme-toolkit/packages/cli/bin/bopli-theme.js validate .",
+        "build": "node ../bopli-theme-toolkit/packages/cli/bin/bopli-theme.js build .",
+        "dev": "node ../bopli-theme-toolkit/packages/cli/bin/bopli-theme.js dev . --app ../bopli-app"
+    }
+}
