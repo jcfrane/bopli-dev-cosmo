@@ -4,8 +4,12 @@
     "version": "0.3.0",
     "type": "module",
     "scripts": {
-        "validate": "node ../bopli-theme-toolkit/packages/cli/bin/bopli-theme.js validate .",
-        "build": "node ../bopli-theme-toolkit/packages/cli/bin/bopli-theme.js build .",
-        "dev": "node ../bopli-theme-toolkit/packages/cli/bin/bopli-theme.js dev . --app ../bopli-app"
+        "validate": "bopli-theme validate .",
+        "build": "bopli-theme build .",
+        "dev": "bopli-theme dev . --app ../bopli-app"
+    },
+    "devDependencies": {
+        "@bopli/theme-cli": "0.1.1",
+        "@bopli/theme-sdk": "0.1.1"
     }
 }

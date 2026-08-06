@@ -4,11 +4,10 @@ Dev Cosmo is the first public-facing theme for Bopli and the initial theme for j
 
 ## Develop locally
 
-Clone the public toolkit beside this repository and check out the version used by release CI:
+Install the exact public toolkit versions declared by this repository:
 
 ```bash
-git clone git@github.com:jcfrane/bopli-theme-toolkit.git ../bopli-theme-toolkit
-git -C ../bopli-theme-toolkit checkout v0.1.0
+npm install
 ```
 
 Then, with the Bopli Docker stack running:
@@ -17,7 +16,7 @@ Then, with the Bopli Docker stack running:
 npm run dev
 ```
 
-The script uses the sibling `bopli-theme-toolkit` watch server and registers a local-only development release through the PHP container. Source stays in this repository; it is never copied into `bopli-app` and the application Vite build does not compile it.
+The script uses the installed `@bopli/theme-cli` watch server and registers a local-only development release through the PHP container. Source stays in this repository; it is never copied into `bopli-app` and the application Vite build does not compile it.
 
 For a production-shaped release:
 
