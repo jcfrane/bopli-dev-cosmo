@@ -1,0 +1,50 @@
+{
+  "$schema": "https://bopli.com/schemas/theme-v1.json",
+  "schemaVersion": 1,
+  "handle": "dev-cosmo",
+  "name": "Dev Cosmo",
+  "description": "A cosmic, Ubuntu-inspired personal site for writing and selected work.",
+  "author": "jcfrane",
+  "version": "0.1.0",
+  "bopli": "^0.1",
+  "templates": {
+    "home": {
+      "name": "Cosmo home",
+      "kind": "page",
+      "component": "Home.vue",
+      "slots": {
+        "featured_post": {
+          "name": "Featured post"
+        },
+        "recent_posts": {
+          "name": "Recent posts"
+        },
+        "featured_projects": {
+          "name": "Featured projects"
+        }
+      }
+    },
+    "post": {
+      "name": "Cosmo post",
+      "kind": "entry",
+      "component": "Post.vue",
+      "fields": {
+        "excerpt": {
+          "name": "Excerpt",
+          "type": "long_text",
+          "required": true
+        },
+        "body": {
+          "name": "Body",
+          "type": "rich_text",
+          "required": true
+        },
+        "readTime": {
+          "name": "Read time",
+          "type": "number",
+          "required": false
+        }
+      }
+    }
+  }
+}

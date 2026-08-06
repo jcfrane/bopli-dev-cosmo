@@ -1,0 +1,13 @@
+{
+  "name": "jcfrane/dev-cosmo",
+  "description": "The Dev Cosmo public theme for Bopli.",
+  "type": "bopli-theme",
+  "license": "MIT",
+  "version": "0.1.0",
+  "require": {
+    "php": ">=8.3"
+  },
+  "extra": {
+    "bopli-theme": "bopli-theme.json"
+  }
+}
