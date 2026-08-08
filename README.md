@@ -1,6 +1,6 @@
 # Dev Cosmo
 
-Dev Cosmo is the first public-facing theme for Bopli and the initial theme for jcfrane's personal site. It is deliberately independent from Bopli's fixed administration interface.
+Dev Cosmo is the first public-facing theme for Bopli and the initial theme for jcfrane's personal site. It is deliberately independent from Bopli's fixed administration interface. Version 0.4 implements the responsive Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, terminal-style content discovery, and an editorial article surface.
 
 ## Develop locally
 
@@ -39,8 +39,9 @@ There is no manifest file. The platform derives everything from the repository:
 
 ## Templates
 
-- `templates/pages/Home.vue` (`home`) — hero, featured post, recent posts, featured projects.
-- `templates/pages/Blog.vue` (`blog`) — the transmission log: a latest-first listing of posts bound to the `posts` slot.
-- `templates/entries/Post.vue` (`post`) — a single post: excerpt, feature image, and server-sanitized rich-text body.
+- `templates/pages/Home.vue` (`home`) — featured-post hero and a collapsible filesystem-style latest-post tree. The legacy `featured_projects` slot remains declared for release compatibility.
+- `templates/pages/Blog.vue` (`blog`) — searchable, single-tag-filterable archive grouped by projected Categories.
+- `templates/pages/About.vue` (`about`) — author profile, skill flags, timeline, and public social links.
+- `templates/entries/Post.vue` (`post`) — reading progress, feature image, server-sanitized rich-text body, author card, and adjacent-entry navigation.
 
 Page templates receive Bopli's public page contract: `site`, `page`, and projected `slots`. Entry templates receive `site` and a projected `entry`, including server-sanitized body HTML and its canonical route. No component imports or depends on admin application code.

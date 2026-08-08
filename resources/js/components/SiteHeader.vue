@@ -1,55 +1,60 @@
 <script setup lang="ts">
-defineProps<{ siteName: string }>();
+import { onMounted, ref } from 'vue';
+
+type Theme = 'light' | 'dark';
+
+defineProps<{ currentPage: 'home' | 'about' | 'blog' }>();
+
+const theme = ref<Theme>('light');
+
+function applyTheme(nextTheme: Theme): void {
+    theme.value = nextTheme;
+    document.documentElement.dataset.theme = nextTheme;
+}
+
+function toggleTheme(): void {
+    const nextTheme = theme.value === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('blog-theme', nextTheme);
+    applyTheme(nextTheme);
+}
+
+onMounted(() => {
+    const savedTheme = localStorage.getItem('blog-theme');
+    applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+});
 </script>
 
 <template>
-  <header class="site-header">
-    <a class="brand" href="/"
-      ><span class="brand-mark">◉</span>{{ siteName }}</a
-    >
-    <nav aria-label="Primary"><slot /></nav>
-  </header>
+    <nav class="site-nav" aria-label="Primary">
+        <a class="wordmark" href="/" aria-label="Blog home">
+            <span>~</span>/dev-cosmo
+        </a>
+        <div class="nav-actions">
+            <div class="nav-links">
+                <a
+                    href="/"
+                    :aria-current="currentPage === 'home' ? 'page' : undefined"
+                    >Home</a
+                >
+                <a
+                    href="/about"
+                    :aria-current="currentPage === 'about' ? 'page' : undefined"
+                    >About</a
+                >
+                <a
+                    href="/blog"
+                    :aria-current="currentPage === 'blog' ? 'page' : undefined"
+                    >Blogs</a
+                >
+            </div>
+            <button
+                class="theme-toggle"
+                type="button"
+                :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
+                @click="toggleTheme"
+            >
+                --theme={{ theme }}
+            </button>
+        </div>
+    </nav>
 </template>
-
-<style scoped>
-.site-header {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: min(1160px, calc(100% - 40px));
-  margin-inline: auto;
-  padding: 30px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-}
-.brand {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: -0.02em;
-}
-.brand-mark {
-  color: var(--orange);
-  text-shadow: 0 0 20px var(--orange);
-}
-nav {
-  display: flex;
-  gap: 30px;
-}
-nav :deep(a) {
-  color: #bcb3c5;
-  font-size: 0.85rem;
-  text-decoration: none;
-}
-nav :deep(a:hover) {
-  color: white;
-}
-@media (max-width: 800px) {
-  nav {
-    gap: 16px;
-  }
-}
-</style>
