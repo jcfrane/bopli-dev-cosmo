@@ -88,8 +88,8 @@ function toggleDirectory(name: string): void {
                     <span class="tree-name">{{ postFileName(entry) }}</span>
                     <span class="tree-meta"
                         >{{ isoDate(entry.publishedAt)
-                        }}<template v-if="entry.readTime">
-                            · {{ entry.readTime }} min</template
+                        }}<template v-if="entry.readingTimeMinutes">
+                            · {{ entry.readingTimeMinutes }} min</template
                         ></span
                     >
                 </a>

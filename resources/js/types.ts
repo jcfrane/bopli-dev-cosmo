@@ -1,20 +1,20 @@
 import type {
+    BopliBlogIndexProps,
+    BopliBlogPostProps,
+    BopliBlogPostSummary,
     BopliImage,
-    BopliPublicEntry,
     BopliSite,
     BopliTerm,
 } from '@bopli/theme-sdk';
 
-export type CosmoEntry = BopliPublicEntry<{
-    excerpt?: string;
-    readTime?: number;
-    featureImage?: BopliImage | null;
-}>;
+export type CosmoEntry = BopliBlogPostSummary;
+export type CosmoBlogIndexProps = BopliBlogIndexProps;
+export type CosmoBlogPostProps = BopliBlogPostProps;
 
 export type CosmoPostEntry = CosmoEntry & {
-    canonicalPath: string;
+    canonicalPath: string | null;
     seoTitle: string | null;
-    seoDescription: unknown;
+    seoDescription: string | null;
     body: string;
 };
 
@@ -31,14 +31,14 @@ export function isoDate(value?: string | null): string {
 }
 
 export function postFileName(entry: CosmoEntry): string {
-    return `${entry.slug}.md`;
+    return `${entry.slug ?? 'untitled'}.md`;
 }
 
 export function groupEntries(entries: CosmoEntry[]): TreeGroup[] {
     const groups = new Map<string, TreeGroup>();
 
     for (const entry of entries) {
-        const category = entry.terms.category?.[0];
+        const category = entry.categories[0];
         const name = category?.slug || 'uncategorized';
         const current = groups.get(name) ?? {
             name,
@@ -54,7 +54,7 @@ export function groupEntries(entries: CosmoEntry[]): TreeGroup[] {
 }
 
 export function primaryCategory(entry: CosmoEntry): BopliTerm | undefined {
-    return entry.terms.category?.[0];
+    return entry.categories[0];
 }
 
 export function socialLink(

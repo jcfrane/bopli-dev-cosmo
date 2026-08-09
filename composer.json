@@ -3,7 +3,7 @@
     "description": "The Dev Cosmo public theme for Bopli.",
     "type": "bopli-theme",
     "license": "MIT",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "authors": [
         {
             "name": "JC Frane"

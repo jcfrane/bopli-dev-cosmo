@@ -16,24 +16,7 @@ import SiteLayout from '../../components/SiteLayout.vue';
 import TerminalWindow from '../../components/TerminalWindow.vue';
 import TreeListing from '../../components/TreeListing.vue';
 import { groupEntries, isoDate, primaryCategory } from '../../types';
-
-type Term = { name: string; slug: string };
-type EntryImage = {
-    url: string;
-    alt: string | null;
-    width: number | null;
-    height: number | null;
-};
-type Entry = {
-    title: string;
-    slug: string;
-    url: string | null;
-    publishedAt: string | null;
-    terms: Record<string, Term[]>;
-    excerpt?: string;
-    readTime?: number;
-    featureImage?: EntryImage | null;
-};
+import type { CosmoEntry } from '../../types';
 
 type HomeProps = {
     site: {
@@ -52,9 +35,9 @@ type HomeProps = {
         seoDescription: string | null;
     };
     slots: {
-        featured_post?: Entry[];
-        recent_posts?: Entry[];
-        featured_projects?: Entry[];
+        featured_post?: CosmoEntry[];
+        recent_posts?: CosmoEntry[];
+        featured_projects?: Array<Record<string, unknown>>;
     };
     preview?: boolean;
 };
@@ -104,8 +87,8 @@ const featuredCategory = computed(() =>
                     </p>
                     <div v-if="featuredPost" class="hero-meta">
                         {{ isoDate(featuredPost.publishedAt)
-                        }}<template v-if="featuredPost.readTime">
-                            · {{ featuredPost.readTime }} min</template
+                        }}<template v-if="featuredPost.readingTimeMinutes">
+                            · {{ featuredPost.readingTimeMinutes }} min</template
                         >
                     </div>
                     <a
@@ -116,12 +99,12 @@ const featuredCategory = computed(() =>
                     >
                 </div>
                 <img
-                    v-if="featuredPost?.featureImage"
+                    v-if="featuredPost?.coverImage"
                     class="hero-cover"
-                    :src="featuredPost.featureImage.url"
-                    :alt="featuredPost.featureImage.alt ?? featuredPost.title"
-                    :width="featuredPost.featureImage.width ?? 840"
-                    :height="featuredPost.featureImage.height ?? 600"
+                    :src="featuredPost.coverImage.url"
+                    :alt="featuredPost.coverImage.alt ?? featuredPost.title ?? ''"
+                    :width="featuredPost.coverImage.width ?? 840"
+                    :height="featuredPost.coverImage.height ?? 600"
                 />
             </div>
         </header>

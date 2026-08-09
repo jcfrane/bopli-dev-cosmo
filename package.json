@@ -1,7 +1,7 @@
 {
     "name": "@bopli-theme/dev-cosmo",
     "private": true,
-    "version": "0.4.0",
+    "version": "0.5.0",
     "type": "module",
     "scripts": {
         "validate": "bopli-theme validate .",
@@ -9,7 +9,8 @@
         "dev": "bopli-theme dev . --app ../bopli-app"
     },
     "devDependencies": {
-        "@bopli/theme-cli": "0.1.1",
-        "@bopli/theme-sdk": "0.1.1"
+        "@bopli/theme-cli": "file:../bopli-theme-toolkit/packages/cli",
+        "@bopli/theme-sdk": "file:../bopli-theme-toolkit/packages/sdk",
+        "typescript": "^5.9.3"
     }
 }

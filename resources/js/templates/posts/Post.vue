@@ -1,12 +1,7 @@
 <bopli lang="json">
 {
     "name": "Cosmic Terminal post",
-    "fields": {
-        "excerpt": { "name": "Excerpt", "type": "long_text", "required": true },
-        "body": { "name": "Body", "type": "rich_text", "required": true },
-        "readTime": { "name": "Read time", "type": "number" },
-        "featureImage": { "name": "Feature image", "type": "image" }
-    }
+    "default": true
 }
 </bopli>
 
@@ -16,51 +11,16 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import AuthorPortrait from '../../components/AuthorPortrait.vue';
 import SiteLayout from '../../components/SiteLayout.vue';
 import { isoDate, postFileName, primaryCategory } from '../../types';
+import type { CosmoBlogPostProps } from '../../types';
 
-type AdjacentEntry = {
-    title: string;
-    slug: string;
-    url: string;
-};
-
-type Term = { name: string; slug: string };
-type PostProps = {
-    site: {
-        name: string;
-        handle: string;
-        tagline?: string | null;
-        description?: string | null;
-        socialLinks?: Array<{ label: string; url: string }>;
-        canonicalUrl: string;
-    };
-    entry: {
-        title: string;
-        slug: string;
-        url: string | null;
-        canonicalPath: string;
-        publishedAt: string | null;
-        terms: Record<string, Term[]>;
-        seoTitle: string | null;
-        seoDescription: unknown;
-        excerpt: string;
-        body: string;
-        readTime?: number;
-        featureImage?: {
-            url: string;
-            alt: string | null;
-            width: number | null;
-            height: number | null;
-        } | null;
-        previous?: AdjacentEntry | null;
-        next?: AdjacentEntry | null;
-    };
-    preview?: boolean;
-};
-
-const props = defineProps<PostProps>();
+const props = defineProps({
+    site: { type: Object, required: true },
+    post: { type: Object, required: true },
+    preview: { type: Boolean, default: false },
+}) as unknown as CosmoBlogPostProps;
 
 const progress = ref(0);
-const category = computed(() => primaryCategory(props.entry));
+const category = computed(() => primaryCategory(props.post));
 
 function updateProgress(): void {
     const root = document.documentElement;
@@ -98,21 +58,21 @@ onBeforeUnmount(() => {
                     <a href="/blog">~/blog</a> /
                     {{ category?.slug ?? 'uncategorized' }} /
                     <span class="breadcrumb-current">{{
-                        postFileName(entry)
+                    postFileName(post)
                     }}</span>
                 </div>
 
-                <h1 class="post-title">{{ entry.title }}</h1>
+                <h1 class="post-title">{{ post.title }}</h1>
                 <div class="post-meta-row">
                     <div class="post-meta">
-                        {{ isoDate(entry.publishedAt)
-                        }}<template v-if="entry.readTime">
-                            · {{ entry.readTime }} min</template
+                        {{ isoDate(post.publishedAt)
+                        }}<template v-if="post.readingTimeMinutes">
+                            · {{ post.readingTimeMinutes }} min</template
                         >
                     </div>
-                    <div v-if="entry.terms.tag?.length" class="post-tags">
+                    <div v-if="post.tags.length" class="post-tags">
                         <span
-                            v-for="term in entry.terms.tag"
+                            v-for="term in post.tags"
                             :key="term.slug"
                             class="post-tag"
                             >--tag={{ term.slug }}</span
@@ -120,20 +80,20 @@ onBeforeUnmount(() => {
                     </div>
                 </div>
 
-                <figure v-if="entry.featureImage" class="post-figure">
+                <figure v-if="post.coverImage" class="post-figure">
                     <img
                         class="post-cover"
-                        :src="entry.featureImage.url"
-                        :alt="entry.featureImage.alt ?? entry.title"
-                        :width="entry.featureImage.width ?? 1360"
-                        :height="entry.featureImage.height ?? 680"
+                        :src="post.coverImage.url"
+                        :alt="post.coverImage.alt ?? post.title ?? ''"
+                        :width="post.coverImage.width ?? 1360"
+                        :height="post.coverImage.height ?? 680"
                     />
-                    <figcaption v-if="entry.featureImage.alt">
-                        fig 1 — {{ entry.featureImage.alt.toLowerCase() }}
+                    <figcaption v-if="post.coverImage.alt">
+                        fig 1 — {{ post.coverImage.alt.toLowerCase() }}
                     </figcaption>
                 </figure>
 
-                <div class="article-body" v-html="entry.body" />
+                <div class="article-body" v-html="post.body" />
 
                 <hr class="comet-divider" />
 
@@ -158,26 +118,26 @@ onBeforeUnmount(() => {
                 </div>
 
                 <nav
-                    v-if="entry.previous || entry.next"
+                    v-if="post.previous || post.next"
                     class="post-pager"
                     aria-label="Adjacent posts"
                 >
                     <a
-                        v-if="entry.previous"
+                        v-if="post.previous"
                         class="pager-link"
-                        :href="entry.previous.url"
+                        :href="post.previous.url ?? '/blog'"
                     >
                         <span>‹ prev</span>
-                        <span>{{ entry.previous.slug }}.md</span>
+                        <span>{{ post.previous.slug }}.md</span>
                     </a>
                     <span v-else />
                     <a
-                        v-if="entry.next"
+                        v-if="post.next"
                         class="pager-link pager-link-next"
-                        :href="entry.next.url"
+                        :href="post.next.url ?? '/blog'"
                     >
                         <span>next ›</span>
-                        <span>{{ entry.next.slug }}.md</span>
+                        <span>{{ post.next.slug }}.md</span>
                     </a>
                 </nav>
             </article>
