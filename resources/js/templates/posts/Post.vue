@@ -13,11 +13,7 @@ import SiteLayout from '../../components/SiteLayout.vue';
 import { isoDate, postFileName, primaryCategory } from '../../types';
 import type { CosmoBlogPostProps } from '../../types';
 
-const props = defineProps({
-    site: { type: Object, required: true },
-    post: { type: Object, required: true },
-    preview: { type: Boolean, default: false },
-}) as unknown as CosmoBlogPostProps;
+const props = defineProps<CosmoBlogPostProps>();
 
 const progress = ref(0);
 const category = computed(() => primaryCategory(props.post));

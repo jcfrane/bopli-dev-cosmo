@@ -5,12 +5,16 @@
     "type": "module",
     "scripts": {
         "validate": "bopli-theme validate .",
-        "build": "bopli-theme build .",
+        "types:check": "vue-tsc --noEmit -p tsconfig.json",
+        "build": "npm run types:check && bopli-theme build .",
         "dev": "bopli-theme dev . --app ../bopli-app"
     },
     "devDependencies": {
         "@bopli/theme-cli": "file:../bopli-theme-toolkit/packages/cli",
         "@bopli/theme-sdk": "file:../bopli-theme-toolkit/packages/sdk",
-        "typescript": "^5.9.3"
+        "typescript": "^5.9.3",
+        "vite": "^8.0.0",
+        "vue": "^3.5.13",
+        "vue-tsc": "^2.2.4"
     }
 }

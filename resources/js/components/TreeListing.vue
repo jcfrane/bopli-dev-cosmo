@@ -73,7 +73,7 @@ function toggleDirectory(name: string): void {
             <template v-if="openDirectories.has(group.name)">
                 <a
                     v-for="(entry, entryIndex) in group.entries"
-                    :key="entry.slug"
+                    :key="entry.slug ?? entryIndex"
                     class="tree-row tree-file"
                     :href="entry.url ?? '/blog'"
                 >

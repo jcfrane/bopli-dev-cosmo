@@ -14,14 +14,7 @@ import TreeListing from '../../components/TreeListing.vue';
 import { groupEntries, postFileName } from '../../types';
 import type { CosmoBlogIndexProps } from '../../types';
 
-const props = defineProps({
-    site: { type: Object, required: true },
-    blog: { type: Object, required: true },
-    posts: { type: Object, required: true },
-    filters: { type: Object, required: true },
-    categories: { type: Array, required: true },
-    tags: { type: Array, required: true },
-}) as unknown as CosmoBlogIndexProps;
+const props = defineProps<CosmoBlogIndexProps>();
 
 const query = ref(props.filters.q);
 const groups = computed(() => groupEntries(props.posts.data));

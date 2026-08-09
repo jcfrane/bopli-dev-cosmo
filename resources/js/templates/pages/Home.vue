@@ -16,33 +16,9 @@ import SiteLayout from '../../components/SiteLayout.vue';
 import TerminalWindow from '../../components/TerminalWindow.vue';
 import TreeListing from '../../components/TreeListing.vue';
 import { groupEntries, isoDate, primaryCategory } from '../../types';
-import type { CosmoEntry } from '../../types';
+import type { CosmoHomeProps } from '../../types';
 
-type HomeProps = {
-    site: {
-        name: string;
-        handle: string;
-        tagline?: string | null;
-        description?: string | null;
-        socialLinks?: Array<{ label: string; url: string }>;
-        canonicalUrl: string;
-    };
-    page: {
-        title: string;
-        path: string;
-        fields: Record<string, unknown>;
-        seoTitle: string | null;
-        seoDescription: string | null;
-    };
-    slots: {
-        featured_post?: CosmoEntry[];
-        recent_posts?: CosmoEntry[];
-        featured_projects?: Array<Record<string, unknown>>;
-    };
-    preview?: boolean;
-};
-
-const props = defineProps<HomeProps>();
+const props = defineProps<CosmoHomeProps>();
 
 const featuredPost = computed(() => props.slots.featured_post?.[0]);
 const recentGroups = computed(() =>
