@@ -1,6 +1,6 @@
 # Dev Cosmo
 
-Dev Cosmo is the first public-facing theme for Bopli and the initial theme for jcfrane's personal site. It is deliberately independent from Bopli's fixed administration interface. Version 0.7 implements the protocol-v1 Page, Entry, theme-query, settings, starter-content, native Blog, and public Site Owner contracts with the responsive Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, terminal-style content discovery, and an editorial article surface.
+Dev Cosmo is the first public-facing theme for Boply and the initial theme for jcfrane's personal site. Bopli is the platform's development codename and remains in technical package and protocol names. Dev Cosmo is deliberately independent from Bopli's fixed administration interface. Version 0.7 implements the protocol-v1 Page, Entry, theme-query, settings, starter-content, native Blog, and public Site Owner contracts with the responsive Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, terminal-style content discovery, and an editorial article surface.
 
 ## Develop locally
 
@@ -34,7 +34,7 @@ All Vue components use `<script setup lang="ts">`; shared public-contract extens
 
 There is no manifest file. The platform derives everything from the repository:
 
-- **Identity and settings** come from `package.json`: normal package fields own the version, description, and author, while `bopli` declares the stable handle, display name, supported Bopli version, color modes, and presentation settings.
+- **Identity and settings** come from `package.json`: normal package fields own the version, description, and publisher (`Boply`), while `bopli` declares the stable handle, display name, supported Bopli version, preview image, color modes, and presentation settings. Appearance displays the real `resources/images/dev-cosmo-preview.png` site capture on the installed-theme card.
 - Templates live only in `pages` and `entries`. Those directories infer ordinary Page and Entry kinds; native Blog templates opt in with `"kind": "blog_index"` or `"kind": "blog_post"` metadata in the matching directory. The template handle is the snake_case filename.
 - **Template metadata** lives in a `<bopli lang="json">` custom block. Generic Entries declare `fields`; native Blog templates declare their special kind. Page and Entry kinds are required and each has one default; Blog archive/post support is optional and paired. Slot declarations are not part of protocol v1.
 - **Starter content** lives in `resources/bopli/starter.json`. Its v1 recipe declares the Projects model and public route, three Project entries, published Home/About Pages, and Blog enablement.

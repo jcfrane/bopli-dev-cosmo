@@ -3,14 +3,15 @@
     "private": true,
     "version": "0.7.0",
     "type": "module",
-    "description": "The Dev Cosmo public theme for Bopli.",
-    "author": "JC Frane",
+    "description": "The Dev Cosmo public theme for Boply.",
+    "author": "Boply",
     "license": "MIT",
     "bopli": {
         "handle": "dev-cosmo",
         "name": "Dev Cosmo",
         "requires": "^0.1",
         "colorModes": ["light", "dark"],
+        "preview": "resources/images/dev-cosmo-preview.png",
         "settings": {
             "accent_color": {
                 "name": "Accent color",
