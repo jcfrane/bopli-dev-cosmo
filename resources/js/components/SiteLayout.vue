@@ -1,20 +1,14 @@
 <script setup lang="ts">
+import type { BopliSite } from "@bopli/theme-sdk";
 import { computed } from "vue";
 
 import "../theme.css";
 import type { CosmoSettings } from "../types";
-import SiteFooter from "./SiteFooter.vue";
-import SiteHeader from "./SiteHeader.vue";
+import DefaultFooter from "./footers/DefaultFooter.vue";
+import DefaultHeader from "./headers/DefaultHeader.vue";
 
 const props = defineProps<{
-  site: {
-    name: string;
-    handle: string;
-    tagline?: string | null;
-    description?: string | null;
-    socialLinks?: Array<{ label: string; url: string }>;
-    canonicalUrl: string;
-  };
+  site: BopliSite;
   settings: CosmoSettings;
   currentPage: "home" | "about" | "blog" | null;
 }>();
@@ -26,15 +20,21 @@ const themeStyle = computed(() => ({
 
 <template>
   <div class="cosmo-page" :style="themeStyle">
-    <SiteHeader
+    <slot
+      name="header"
       :site="site"
       :current-page="currentPage"
       :show-theme-toggle="settings.show_theme_toggle"
-    />
+    >
+      <DefaultHeader
+        :site="site"
+        :current-page="currentPage"
+        :show-theme-toggle="settings.show_theme_toggle"
+      />
+    </slot>
     <slot />
-    <SiteFooter
-      :social-links="site.socialLinks"
-      :footer-text="settings.footer_text"
-    />
+    <slot name="footer" :site="site">
+      <DefaultFooter :social-links="site.socialLinks" />
+    </slot>
   </div>
 </template>

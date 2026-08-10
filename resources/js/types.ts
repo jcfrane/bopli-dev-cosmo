@@ -16,7 +16,6 @@ export type CosmoSettings = BopliThemeSettings & {
     accent_color: string;
     show_theme_toggle: boolean;
     homepage_post_count: string;
-    footer_text: string;
     author_portrait: BopliImage | null;
 };
 export type CosmoBlogIndexProps = BopliBlogIndexProps & { settings: CosmoSettings };

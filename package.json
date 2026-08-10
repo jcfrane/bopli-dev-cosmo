@@ -1,7 +1,7 @@
 {
     "name": "@bopli-theme/dev-cosmo",
     "private": true,
-    "version": "0.6.0",
+    "version": "0.7.0",
     "type": "module",
     "description": "The Dev Cosmo public theme for Bopli.",
     "author": "JC Frane",
@@ -28,11 +28,6 @@
                 "type": "select",
                 "options": ["6", "10", "12"],
                 "default": "10"
-            },
-            "footer_text": {
-                "name": "Footer text",
-                "type": "text",
-                "default": "powered by an open-source cms · theme: cosmic-terminal"
             },
             "author_portrait": {
                 "name": "Author portrait",

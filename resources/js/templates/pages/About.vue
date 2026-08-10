@@ -33,8 +33,8 @@ function displayUrl(url: string): string {
     <main class="about-main">
       <header class="about-header">
         <AuthorPortrait
-          :source="settings.author_portrait?.url"
-          :alt="settings.author_portrait?.alt ?? `Illustrated portrait of ${site.name}`"
+          :source="settings.author_portrait?.url ?? site.owner?.profileImage?.url"
+          :alt="settings.author_portrait?.alt ?? site.owner?.profileImage?.alt ?? `Illustrated portrait of ${site.name}`"
         />
         <div class="about-heading">
           <p class="about-prompt"><span>$</span> whoami</p>

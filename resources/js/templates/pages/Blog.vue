@@ -1,6 +1,7 @@
 <bopli lang="json">
 {
     "name": "Cosmic Terminal blog",
+    "kind": "blog_index",
     "default": true
 }
 </bopli>

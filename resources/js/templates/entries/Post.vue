@@ -1,6 +1,7 @@
 <bopli lang="json">
 {
     "name": "Cosmic Terminal post",
+    "kind": "blog_post",
     "default": true
 }
 </bopli>
@@ -96,8 +97,8 @@ onBeforeUnmount(() => {
                 <div class="author-card">
                     <AuthorPortrait
                         size="avatar"
-                        :source="settings.author_portrait?.url"
-                        :alt="settings.author_portrait?.alt ?? `Illustrated portrait of ${site.name}`"
+                        :source="settings.author_portrait?.url ?? site.owner?.profileImage?.url"
+                        :alt="settings.author_portrait?.alt ?? site.owner?.profileImage?.alt ?? `Illustrated portrait of ${site.name}`"
                     />
                     <div class="author-card-copy">
                         <strong
