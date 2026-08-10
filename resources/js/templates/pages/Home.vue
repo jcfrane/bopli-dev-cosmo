@@ -1,28 +1,37 @@
 <bopli lang="json">
 {
-    "name": "Cosmic Terminal home",
-    "slots": {
-        "featured_post": { "name": "Featured post" },
-        "recent_posts": { "name": "Recent posts" },
-        "featured_projects": { "name": "Featured projects" }
-    }
+    "name": "Cosmic Terminal home"
 }
 </bopli>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useBopliQuery } from '@bopli/theme-sdk';
 
 import SiteLayout from '../../components/SiteLayout.vue';
 import TerminalWindow from '../../components/TerminalWindow.vue';
 import TreeListing from '../../components/TreeListing.vue';
 import { groupEntries, isoDate, primaryCategory } from '../../types';
-import type { CosmoHomeProps } from '../../types';
+import type { CosmoEntry, CosmoHomeProps } from '../../types';
 
 const props = defineProps<CosmoHomeProps>();
 
-const featuredPost = computed(() => props.slots.featured_post?.[0]);
+const featuredQuery = useBopliQuery<CosmoEntry>({
+    source: 'blog.posts',
+    filter: { featured: true },
+    sort: '-published_at',
+    limit: 1,
+});
+const recentQuery = useBopliQuery<CosmoEntry>({
+    source: 'blog.posts',
+    sort: '-published_at',
+    limit: Number(props.settings.homepage_post_count ?? 10),
+});
+const featuredPost = computed(
+    () => featuredQuery.data.value[0] ?? recentQuery.data.value[0],
+);
 const recentGroups = computed(() =>
-    groupEntries(props.slots.recent_posts ?? []),
+    groupEntries(recentQuery.data.value),
 );
 const featuredCategory = computed(() =>
     featuredPost.value ? primaryCategory(featuredPost.value) : undefined,
@@ -30,7 +39,7 @@ const featuredCategory = computed(() =>
 </script>
 
 <template>
-    <SiteLayout :site="site" current-page="home">
+    <SiteLayout :site="site" :settings="settings" current-page="home">
         <header class="home-hero">
             <div class="hero-starfield" />
             <div class="hero-orbit" />
@@ -97,6 +106,12 @@ const featuredCategory = computed(() =>
                     :groups="recentGroups"
                     root="~/blog --latest"
                 />
+                <p v-else-if="recentQuery.loading.value" class="empty-state">
+                    scanning ~/blog for recent transmissions <span>▌</span>
+                </p>
+                <p v-else-if="recentQuery.error.value" class="empty-state">
+                    query failed — retry when the uplink is restored
+                </p>
                 <p v-else class="empty-state">
                     0 files matched — the first transmission is being prepared
                     <span>▌</span>

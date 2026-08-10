@@ -1,7 +1,6 @@
 <bopli lang="json">
 {
-  "name": "Cosmic Terminal about",
-  "slots": {}
+  "name": "Cosmic Terminal about"
 }
 </bopli>
 
@@ -30,10 +29,13 @@ function displayUrl(url: string): string {
 </script>
 
 <template>
-  <SiteLayout :site="site" current-page="about">
+  <SiteLayout :site="site" :settings="settings" current-page="about">
     <main class="about-main">
       <header class="about-header">
-        <AuthorPortrait :alt="`Illustrated portrait of ${site.name}`" />
+        <AuthorPortrait
+          :source="settings.author_portrait?.url"
+          :alt="settings.author_portrait?.alt ?? `Illustrated portrait of ${site.name}`"
+        />
         <div class="about-heading">
           <p class="about-prompt"><span>$</span> whoami</p>
           <h1>{{ page.title }}</h1>

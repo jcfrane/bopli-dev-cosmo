@@ -1,7 +1,7 @@
 <script setup lang="ts">
 type SocialLink = { label: string; url: string };
 
-defineProps<{ socialLinks?: SocialLink[] }>();
+defineProps<{ socialLinks?: SocialLink[]; footerText?: string }>();
 </script>
 
 <template>
@@ -17,7 +17,7 @@ defineProps<{ socialLinks?: SocialLink[] }>();
                     >{{ link.label.toLowerCase() }}</a
                 >
             </div>
-            <p>powered by an open-source cms · theme: cosmic-terminal</p>
+            <p>{{ footerText || 'powered by an open-source cms · theme: cosmic-terminal' }}</p>
         </div>
     </footer>
 </template>

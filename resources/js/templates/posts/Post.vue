@@ -36,7 +36,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <SiteLayout :site="site" current-page="blog">
+    <SiteLayout :site="site" :settings="settings" current-page="blog">
         <div
             class="reading-progress"
             role="progressbar"
@@ -96,7 +96,8 @@ onBeforeUnmount(() => {
                 <div class="author-card">
                     <AuthorPortrait
                         size="avatar"
-                        :alt="`Illustrated portrait of ${site.name}`"
+                        :source="settings.author_portrait?.url"
+                        :alt="settings.author_portrait?.alt ?? `Illustrated portrait of ${site.name}`"
                     />
                     <div class="author-card-copy">
                         <strong

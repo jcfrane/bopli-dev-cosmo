@@ -6,6 +6,7 @@ type Theme = "light" | "dark";
 defineProps<{
   site: { name: string; handle: string };
   currentPage: "home" | "about" | "blog" | null;
+  showThemeToggle: boolean;
 }>();
 
 const theme = ref<Theme>("light");
@@ -49,6 +50,7 @@ onMounted(() => {
         >
       </div>
       <button
+        v-if="showThemeToggle"
         class="theme-toggle"
         type="button"
         :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"

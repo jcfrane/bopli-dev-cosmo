@@ -1,8 +1,7 @@
 <bopli lang="json">
 {
   "name": "Cosmic Terminal page",
-  "default": true,
-  "slots": {}
+  "default": true
 }
 </bopli>
 
@@ -22,7 +21,7 @@ const paragraphs = computed(() =>
 </script>
 
 <template>
-  <SiteLayout :site="site" :current-page="null">
+  <SiteLayout :site="site" :settings="settings" :current-page="null">
     <main class="about-main">
       <p class="about-prompt"><span>$</span> cat {{ page.path }}</p>
       <h1 class="page-title">{{ page.title }}</h1>

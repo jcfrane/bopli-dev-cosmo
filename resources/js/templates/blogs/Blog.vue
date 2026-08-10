@@ -45,7 +45,7 @@ function search(): void {
 </script>
 
 <template>
-    <SiteLayout :site="site" current-page="blog">
+    <SiteLayout :site="site" :settings="settings" current-page="blog">
         <main class="archive-main">
             <h1 class="page-title">{{ blog.title || 'All posts' }}</h1>
             <p class="archive-intro">

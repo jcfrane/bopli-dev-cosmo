@@ -1,8 +1,47 @@
 {
     "name": "@bopli-theme/dev-cosmo",
     "private": true,
-    "version": "0.5.0",
+    "version": "0.6.0",
     "type": "module",
+    "description": "The Dev Cosmo public theme for Bopli.",
+    "author": "JC Frane",
+    "license": "MIT",
+    "bopli": {
+        "handle": "dev-cosmo",
+        "name": "Dev Cosmo",
+        "requires": "^0.1",
+        "colorModes": ["light", "dark"],
+        "settings": {
+            "accent_color": {
+                "name": "Accent color",
+                "type": "color",
+                "description": "Color used for prompts, links, and interface highlights.",
+                "default": "#e95420"
+            },
+            "show_theme_toggle": {
+                "name": "Show theme toggle",
+                "type": "boolean",
+                "default": true
+            },
+            "homepage_post_count": {
+                "name": "Homepage post count",
+                "type": "select",
+                "options": ["6", "10", "12"],
+                "default": "10"
+            },
+            "footer_text": {
+                "name": "Footer text",
+                "type": "text",
+                "default": "powered by an open-source cms · theme: cosmic-terminal"
+            },
+            "author_portrait": {
+                "name": "Author portrait",
+                "type": "image",
+                "description": "Optional portrait used on About and Blog post pages.",
+                "default": null
+            }
+        }
+    },
     "scripts": {
         "validate": "bopli-theme validate .",
         "types:check": "vue-tsc --noEmit -p tsconfig.json",

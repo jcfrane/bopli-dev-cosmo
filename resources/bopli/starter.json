@@ -70,21 +70,7 @@
       "path": "/",
       "template": "home",
       "status": "published",
-      "data": { "body": "Welcome to my site." },
-      "bindings": [
-        { "slot": "featured_post", "source": "blog_posts", "limit": 1 },
-        { "slot": "recent_posts", "source": "blog_posts", "limit": 10 },
-        {
-          "slot": "featured_projects",
-          "source": "content_model",
-          "model": "project",
-          "filters": [
-            { "field": "featured", "operator": "equals", "value": true }
-          ],
-          "fieldMap": { "summary": "summary", "externalUrl": "url" },
-          "limit": 6
-        }
-      ]
+      "data": { "body": "Welcome to my site." }
     },
     {
       "title": "About",
@@ -93,8 +79,7 @@
       "status": "published",
       "data": {
         "body": "Write a short introduction about yourself, your work, and what visitors can expect to find here.\n\nYou can edit this content at any time from the Bopli Page editor."
-      },
-      "bindings": []
+      }
     }
   ],
   "blog": { "enabled": true }
