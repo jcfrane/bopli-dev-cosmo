@@ -42,6 +42,7 @@
         "validate": "bopli-theme validate .",
         "types:check": "vue-tsc --noEmit -p tsconfig.json",
         "build": "npm run types:check && bopli-theme build .",
+        "package": "npm run types:check && bopli-theme package .",
         "dev": "bopli-theme dev . --app ../bopli-app"
     },
     "devDependencies": {
