@@ -68,6 +68,8 @@
     --color-border-strong: #c9c0c5;
     --color-terminal-bg: #2c001e;
     --color-terminal-bar: #3a0e2c;
+    --color-terminal-bar-highlight: #4a173b;
+    --color-terminal-border: #5e2750;
     --color-terminal-text: #f4e9f0;
     --color-terminal-muted: #b99daf;
     --color-code-bg: #2c001e;
@@ -101,6 +103,8 @@
     --color-border-strong: #5e2750;
     --color-terminal-bg: #240117;
     --color-terminal-bar: #3a0a2c;
+    --color-terminal-bar-highlight: #4a143a;
+    --color-terminal-border: #5e2750;
     --color-terminal-text: #f4e9f0;
     --color-terminal-muted: #b99daf;
     --color-code-bg: #240117;
@@ -953,7 +957,7 @@ input {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-1);
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.7;
 }
 
@@ -967,40 +971,118 @@ input {
     margin: 22px 0;
     overflow: hidden;
     background: var(--color-code-bg);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-terminal-border);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-1);
+    box-shadow: var(--shadow-terminal);
 }
 
 .article-body .code-block__toolbar {
-    display: flex;
-    min-height: 36px;
+    display: grid;
+    min-height: 42px;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
     gap: 16px;
-    padding: 0 12px 0 18px;
+    padding: 0 10px 0 14px;
     color: var(--color-terminal-muted);
-    background: var(--color-terminal-bar);
-    border-bottom: 1px solid var(--color-border);
+    background: linear-gradient(
+        180deg,
+        var(--color-terminal-bar-highlight),
+        var(--color-terminal-bar)
+    );
+    border-bottom: 1px solid var(--color-terminal-border);
     font-family: var(--font-mono);
     font-size: 12px;
     text-transform: lowercase;
 }
 
-.article-body .code-block__copy {
-    padding: 4px 8px;
+.article-body .code-block__identity,
+.article-body .code-block__window-controls,
+.article-body .code-block__title {
+    display: flex;
+    align-items: center;
+}
+
+.article-body .code-block__identity {
+    min-width: 0;
+    gap: 14px;
+}
+
+.article-body .code-block__window-controls {
+    flex: 0 0 auto;
+    gap: 7px;
+}
+
+.article-body .code-block__window-control {
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    border-radius: 50%;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.28);
+}
+
+.article-body .code-block__window-control--close {
+    background: #ff5f57;
+}
+
+.article-body .code-block__window-control--minimize {
+    background: #febc2e;
+}
+
+.article-body .code-block__window-control--maximize {
+    background: #28c840;
+}
+
+.article-body .code-block__title {
+    min-width: 0;
+    gap: 6px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.article-body .code-block__path {
+    color: var(--color-terminal-text);
+}
+
+.article-body .code-block__path::before {
+    content: '$ ';
+    color: var(--color-accent);
+}
+
+.article-body .code-block__title-separator {
     color: var(--color-terminal-muted);
-    background: transparent;
-    border: 1px solid transparent;
+}
+
+.article-body .code-block__language {
+    overflow: hidden;
+    color: var(--color-terminal-muted);
+    text-overflow: ellipsis;
+}
+
+.article-body .code-block__copy {
+    min-width: 58px;
+    padding: 5px 9px;
+    color: var(--color-terminal-muted);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-xs);
     cursor: pointer;
     font-family: var(--font-mono);
     font-size: 12px;
+    transition:
+        color var(--dur-fast) var(--ease-standard),
+        background var(--dur-fast) var(--ease-standard),
+        border-color var(--dur-fast) var(--ease-standard);
+}
+
+.article-body .code-block__copy::before {
+    content: '$ ';
+    color: var(--color-accent);
 }
 
 .article-body .code-block__copy:hover {
     color: var(--color-terminal-text);
-    border-color: var(--color-border-strong);
+    background: rgba(255, 255, 255, 0.09);
+    border-color: var(--color-terminal-muted);
 }
 
 .article-body .code-block__copy[data-state='success'] {
@@ -1013,6 +1095,7 @@ input {
 
 .article-body .code-block pre {
     margin: 0;
+    padding: 22px 24px 24px;
     border-radius: 0;
     box-shadow: none;
 }

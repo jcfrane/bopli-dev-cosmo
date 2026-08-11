@@ -114,9 +114,38 @@ function codeToolbar(
     const toolbar = document.createElement('div');
     toolbar.className = 'code-block__toolbar';
 
+    const identity = document.createElement('div');
+    identity.className = 'code-block__identity';
+
+    const windowControls = document.createElement('span');
+    windowControls.className = 'code-block__window-controls';
+    windowControls.setAttribute('aria-hidden', 'true');
+
+    for (const control of ['close', 'minimize', 'maximize']) {
+        const dot = document.createElement('span');
+        dot.className = `code-block__window-control code-block__window-control--${control}`;
+        windowControls.append(dot);
+    }
+
+    const title = document.createElement('span');
+    title.className = 'code-block__title';
+
+    const path = document.createElement('span');
+    path.className = 'code-block__path';
+    path.textContent = '~/code';
+
+    const separator = document.createElement('span');
+    separator.className = 'code-block__title-separator';
+    separator.textContent = '—';
+    separator.setAttribute('aria-hidden', 'true');
+
     const label = document.createElement('span');
+    label.className = 'code-block__language';
     label.textContent = language;
-    toolbar.append(label);
+
+    title.append(path, separator, label);
+    identity.append(windowControls, title);
+    toolbar.append(identity);
 
     const button = document.createElement('button');
     button.type = 'button';

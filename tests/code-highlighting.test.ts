@@ -23,6 +23,13 @@ describe('enhanceCodeBlocks', () => {
         expect(root.querySelectorAll('.code-block')).toHaveLength(1);
         expect(root.querySelector('pre.shiki')).not.toBeNull();
         expect(root.querySelector('.code-block')?.getAttribute('data-language')).toBe('typescript');
+        expect(root.querySelectorAll('.code-block__window-control')).toHaveLength(3);
+        expect(root.querySelector('.code-block__window-controls')?.getAttribute('aria-hidden')).toBe(
+            'true',
+        );
+        expect(root.querySelector('.code-block__title')?.textContent).toBe(
+            '~/code—typescript',
+        );
         expect(root.textContent).toContain('const answer: number = 42;');
         dispose();
     });
