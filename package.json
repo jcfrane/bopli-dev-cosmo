@@ -1,7 +1,7 @@
 {
     "name": "@bopli-theme/dev-cosmo",
     "private": true,
-    "version": "0.8.3",
+    "version": "0.8.4",
     "type": "module",
     "description": "The Dev Cosmo public theme for Boply.",
     "author": "Boply",

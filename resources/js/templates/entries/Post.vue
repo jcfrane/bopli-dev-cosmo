@@ -13,7 +13,6 @@ import AuthorPortrait from '../../components/AuthorPortrait.vue';
 import SiteLayout from '../../components/SiteLayout.vue';
 import { isoDate, postFileName, primaryCategory } from '../../types';
 import type { CosmoBlogPostProps } from '../../types';
-import { enhanceCodeBlocks } from '../../code-highlighting';
 
 const props = defineProps<CosmoBlogPostProps>();
 
@@ -21,15 +20,44 @@ const progress = ref(0);
 const articleBody = ref<HTMLElement | null>(null);
 const category = computed(() => primaryCategory(props.post));
 let disposeCodeBlocks = (): void => {};
+let codeObserver: IntersectionObserver | undefined;
 let enhancementRun = 0;
 
-async function enhanceArticleCode(): Promise<void> {
+async function scheduleArticleCode(): Promise<void> {
     const run = ++enhancementRun;
+    codeObserver?.disconnect();
+    codeObserver = undefined;
     disposeCodeBlocks();
     disposeCodeBlocks = (): void => {};
     await nextTick();
 
-    if (!articleBody.value) return;
+    const firstBlock = articleBody.value?.querySelector('pre');
+    if (!firstBlock || run !== enhancementRun) return;
+
+    if (!('IntersectionObserver' in window)) {
+        await enhanceArticleCode(run);
+
+        return;
+    }
+
+    codeObserver = new IntersectionObserver(
+        (entries) => {
+            if (!entries.some((entry) => entry.isIntersecting)) return;
+
+            codeObserver?.disconnect();
+            codeObserver = undefined;
+            void enhanceArticleCode(run);
+        },
+        { rootMargin: '300px 0px' },
+    );
+    codeObserver.observe(firstBlock);
+}
+
+async function enhanceArticleCode(run: number): Promise<void> {
+    if (!articleBody.value || run !== enhancementRun) return;
+
+    const { enhanceCodeBlocks } = await import('../../code-highlighting');
+    if (run !== enhancementRun) return;
 
     const dispose = await enhanceCodeBlocks(articleBody.value);
 
@@ -50,17 +78,18 @@ function updateProgress(): void {
 onMounted(() => {
     updateProgress();
     window.addEventListener('scroll', updateProgress, { passive: true });
-    void enhanceArticleCode();
+    void scheduleArticleCode();
 });
 
 watch(
     () => props.post.body,
-    () => void enhanceArticleCode(),
+    () => void scheduleArticleCode(),
 );
 
 onBeforeUnmount(() => {
     window.removeEventListener('scroll', updateProgress);
     enhancementRun += 1;
+    codeObserver?.disconnect();
     disposeCodeBlocks();
 });
 </script>
@@ -113,6 +142,7 @@ onBeforeUnmount(() => {
                         :alt="post.coverImage.alt ?? post.title ?? ''"
                         :width="post.coverImage.width ?? 1360"
                         :height="post.coverImage.height ?? 680"
+                        fetchpriority="high"
                     />
                     <figcaption v-if="post.coverImage.alt">
                         fig 1 — {{ post.coverImage.alt.toLowerCase() }}

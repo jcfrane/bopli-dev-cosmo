@@ -90,6 +90,7 @@ const featuredCategory = computed(() =>
                     :alt="featuredPost.coverImage.alt ?? featuredPost.title ?? ''"
                     :width="featuredPost.coverImage.width ?? 840"
                     :height="featuredPost.coverImage.height ?? 600"
+                    fetchpriority="high"
                 />
             </div>
         </header>

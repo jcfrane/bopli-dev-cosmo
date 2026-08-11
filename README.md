@@ -1,6 +1,8 @@
 # Dev Cosmo
 
-Dev Cosmo is the first public-facing theme for Boply and the initial theme for jcfrane's personal site. Bopli is the platform's development codename and remains in technical package and protocol names. Dev Cosmo is deliberately independent from Bopli's fixed administration interface. Version 0.8.3 implements the protocol-v1 Page, Entry, theme-query, settings, starter-content, native Blog, public Site Owner, in-memory server-rendering, and highlighted code-block contracts with the responsive Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, terminal-style content discovery, and an editorial article surface.
+Dev Cosmo is the first public-facing theme for Boply and the initial theme for jcfrane's personal site. Bopli is the platform's development codename and remains in technical package and protocol names. Dev Cosmo is deliberately independent from Bopli's fixed administration interface. Version 0.8.4 implements the protocol-v1 Page, Entry, theme-query, settings, starter-content, native Blog, public Site Owner, in-memory server-rendering, and highlighted code-block contracts with the responsive Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, terminal-style content discovery, and an editorial article surface.
+
+The production browser entry keeps code highlighting out of the initial path and loads Shiki only when the first code block approaches the viewport. Ubuntu fonts are separate immutable release assets instead of base64 payloads inside the render-blocking stylesheet, and primary Home/Post images carry high fetch priority.
 
 ## Develop locally
 
