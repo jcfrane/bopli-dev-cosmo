@@ -963,6 +963,69 @@ input {
     background: transparent;
 }
 
+.article-body .code-block {
+    margin: 22px 0;
+    overflow: hidden;
+    background: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-1);
+}
+
+.article-body .code-block__toolbar {
+    display: flex;
+    min-height: 36px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 12px 0 18px;
+    color: var(--color-terminal-muted);
+    background: var(--color-terminal-bar);
+    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: lowercase;
+}
+
+.article-body .code-block__copy {
+    padding: 4px 8px;
+    color: var(--color-terminal-muted);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 12px;
+}
+
+.article-body .code-block__copy:hover {
+    color: var(--color-terminal-text);
+    border-color: var(--color-border-strong);
+}
+
+.article-body .code-block__copy[data-state='success'] {
+    color: #72d5a3;
+}
+
+.article-body .code-block__copy[data-state='error'] {
+    color: #ff8b8b;
+}
+
+.article-body .code-block pre {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.article-body .code-block pre.shiki {
+    background: var(--color-code-bg) !important;
+}
+
+.article-body .code-block pre.shiki code {
+    display: grid;
+    min-width: max-content;
+}
+
 .article-body img {
     display: block;
     max-width: 100%;

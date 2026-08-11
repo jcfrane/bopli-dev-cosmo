@@ -1,7 +1,7 @@
 {
     "name": "@bopli-theme/dev-cosmo",
     "private": true,
-    "version": "0.7.0",
+    "version": "0.8.1",
     "type": "module",
     "description": "The Dev Cosmo public theme for Boply.",
     "author": "Boply",
@@ -10,7 +10,10 @@
         "handle": "dev-cosmo",
         "name": "Dev Cosmo",
         "requires": "^0.1",
-        "colorModes": ["light", "dark"],
+        "colorModes": [
+            "light",
+            "dark"
+        ],
         "preview": "resources/images/dev-cosmo-preview.png",
         "settings": {
             "accent_color": {
@@ -27,7 +30,11 @@
             "homepage_post_count": {
                 "name": "Homepage post count",
                 "type": "select",
-                "options": ["6", "10", "12"],
+                "options": [
+                    "6",
+                    "10",
+                    "12"
+                ],
                 "default": "10"
             },
             "author_portrait": {
@@ -40,6 +47,7 @@
     },
     "scripts": {
         "validate": "bopli-theme validate .",
+        "test": "vitest run --environment jsdom",
         "types:check": "vue-tsc --noEmit -p tsconfig.json",
         "build": "npm run types:check && bopli-theme build .",
         "package": "npm run types:check && bopli-theme package .",
@@ -48,9 +56,14 @@
     "devDependencies": {
         "@bopli/theme-cli": "file:../bopli-theme-toolkit/packages/cli",
         "@bopli/theme-sdk": "file:../bopli-theme-toolkit/packages/sdk",
+        "jsdom": "^30.0.1",
         "typescript": "^5.9.3",
         "vite": "^8.0.0",
+        "vitest": "^4.1.10",
         "vue": "^3.5.13",
         "vue-tsc": "^2.2.4"
+    },
+    "dependencies": {
+        "shiki": "^4.4.3"
     }
 }

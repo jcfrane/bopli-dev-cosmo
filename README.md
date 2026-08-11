@@ -1,6 +1,6 @@
 # Dev Cosmo
 
-Dev Cosmo is the first public-facing theme for Boply and the initial theme for jcfrane's personal site. Bopli is the platform's development codename and remains in technical package and protocol names. Dev Cosmo is deliberately independent from Bopli's fixed administration interface. Version 0.7 implements the protocol-v1 Page, Entry, theme-query, settings, starter-content, native Blog, and public Site Owner contracts with the responsive Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, terminal-style content discovery, and an editorial article surface.
+Dev Cosmo is the first public-facing theme for Boply and the initial theme for jcfrane's personal site. Bopli is the platform's development codename and remains in technical package and protocol names. Dev Cosmo is deliberately independent from Bopli's fixed administration interface. Version 0.8.1 implements the protocol-v1 Page, Entry, theme-query, settings, starter-content, native Blog, public Site Owner, and highlighted code-block contracts with the responsive Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, terminal-style content discovery, and an editorial article surface.
 
 ## Develop locally
 
@@ -26,6 +26,7 @@ For a production-shaped release:
 npm run types:check
 npm run validate
 npm run build
+npm run package
 ```
 
 All Vue components use `<script setup lang="ts">`; shared public-contract extensions live in `resources/js/types.ts`. `types:check` runs strict `vue-tsc`, and `build` runs the same check before writing self-contained ESM, CSS, an artifact inventory, and protocol-v1 `theme.json` with runtime ABI v1 to ignored `dist/`. Tagged releases use the pinned toolkit workflow to upload that directory to an immutable CDN prefix. Bopli then registers the resulting HTTPS descriptor URL with `bopli:theme:install`.
@@ -39,7 +40,7 @@ There is no manifest file. The platform derives everything from the repository:
 - **Template metadata** lives in a `<bopli lang="json">` custom block. Generic Entries declare `fields`; native Blog templates declare their special kind. Page and Entry kinds are required and each has one default; Blog archive/post support is optional and paired. Slot declarations are not part of protocol v1.
 - **Starter content** lives in `resources/bopli/starter.json`. Its v1 recipe declares the Projects model and public route, three Project entries, published Home/About Pages, and Blog enablement.
 - Anything under `resources/js/components/` is shared presentation code imported with relative paths; it is never a template.
-- Theme code may import relative modules, `vue`, and `@bopli/theme-sdk`. Inertia, Bopli application modules, arbitrary packages, remote imports, and Node built-ins are outside the public theme boundary.
+- Theme code may import relative modules, `vue`, `@bopli/theme-sdk`, and the toolkit-approved Shiki subpaths used for lazy code highlighting. Inertia, Bopli application modules, arbitrary packages, remote imports, and Node built-ins are outside the public theme boundary.
 
 ## Templates
 

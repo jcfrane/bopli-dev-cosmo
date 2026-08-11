@@ -7,17 +7,38 @@
 </bopli>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 import AuthorPortrait from '../../components/AuthorPortrait.vue';
 import SiteLayout from '../../components/SiteLayout.vue';
 import { isoDate, postFileName, primaryCategory } from '../../types';
 import type { CosmoBlogPostProps } from '../../types';
+import { enhanceCodeBlocks } from '../../code-highlighting';
 
 const props = defineProps<CosmoBlogPostProps>();
 
 const progress = ref(0);
+const articleBody = ref<HTMLElement | null>(null);
 const category = computed(() => primaryCategory(props.post));
+let disposeCodeBlocks = (): void => {};
+let enhancementRun = 0;
+
+async function enhanceArticleCode(): Promise<void> {
+    const run = ++enhancementRun;
+    disposeCodeBlocks();
+    disposeCodeBlocks = (): void => {};
+    await nextTick();
+
+    if (!articleBody.value) return;
+
+    const dispose = await enhanceCodeBlocks(articleBody.value);
+
+    if (run === enhancementRun) {
+        disposeCodeBlocks = dispose;
+    } else {
+        dispose();
+    }
+}
 
 function updateProgress(): void {
     const root = document.documentElement;
@@ -29,10 +50,18 @@ function updateProgress(): void {
 onMounted(() => {
     updateProgress();
     window.addEventListener('scroll', updateProgress, { passive: true });
+    void enhanceArticleCode();
 });
+
+watch(
+    () => props.post.body,
+    () => void enhanceArticleCode(),
+);
 
 onBeforeUnmount(() => {
     window.removeEventListener('scroll', updateProgress);
+    enhancementRun += 1;
+    disposeCodeBlocks();
 });
 </script>
 
@@ -90,7 +119,7 @@ onBeforeUnmount(() => {
                     </figcaption>
                 </figure>
 
-                <div class="article-body" v-html="post.body" />
+                <div ref="articleBody" class="article-body" v-html="post.body" />
 
                 <hr class="comet-divider" />
 
