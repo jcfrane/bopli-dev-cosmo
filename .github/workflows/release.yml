@@ -7,9 +7,9 @@ on:
 
 jobs:
   release:
-    uses: jcfrane/bopli-theme-toolkit/.github/workflows/release-theme.yml@v0.5.2
+    uses: jcfrane/bopli-theme-toolkit/.github/workflows/release-theme.yml@v0.5.3
     with:
-      toolkit-version: '0.5.2'
+      toolkit-version: '0.5.3'
       asset-base-url: ${{ vars.THEME_ASSET_BASE_URL }}
     secrets:
       R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
