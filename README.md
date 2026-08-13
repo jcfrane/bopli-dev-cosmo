@@ -1,6 +1,6 @@
 # Dev Cosmo
 
-Dev Cosmo is the first public-facing theme for Boply and the initial theme for jcfrane's personal site. Bopli is the platform's development codename and remains in technical package and protocol names. Dev Cosmo is deliberately independent from Bopli's fixed administration interface. Version 0.8.8 implements the protocol-v1 Page, Entry, theme-query, settings, starter-content, native Blog, public Site Owner, in-memory server-rendering, highlighted code-block, and responsive gallery contracts with the Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, terminal-style content discovery, and an editorial article surface.
+Dev Cosmo is the first public-facing theme for Boply and the initial theme for jcfrane's personal site. Bopli is the platform's development codename and remains in technical package and protocol names. Dev Cosmo is deliberately independent from Bopli's fixed administration interface. Version 0.8.9 implements the protocol-v1 Page, Entry, theme-query, settings, starter-content, native Blog, public Site Owner, in-memory server-rendering, highlighted code-block, and responsive gallery contracts with the Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, terminal-style content discovery, and an editorial article surface.
 
 The production browser entry keeps code highlighting out of the initial path and loads Shiki only when the first code block approaches the viewport. Ubuntu fonts are separate immutable release assets instead of base64 payloads inside the render-blocking stylesheet, and primary Home/Post images carry high fetch priority.
 
@@ -31,7 +31,7 @@ npm run build
 npm run package
 ```
 
-All Vue components use `<script setup lang="ts">`; shared public-contract extensions live in `resources/js/types.ts`. `types:check` runs strict `vue-tsc`, and `build` runs the same check before writing self-contained ESM, CSS, an artifact inventory, and protocol-v1 `theme.json` with runtime ABI v1 to ignored `dist/`. Tagged releases use the pinned toolkit workflow to upload that directory to an immutable CDN prefix. Bopli then registers the resulting HTTPS descriptor URL with `bopli:theme:install`.
+All Vue components use `<script setup lang="ts">`; shared public-contract extensions live in `resources/js/types.ts`. `types:check` runs strict `vue-tsc`, and `build` runs the same check before writing self-contained ESM, CSS, an artifact inventory, and protocol-v1 `theme.json` with runtime ABI v1 to ignored `dist/`. Tagged releases use the pinned toolkit workflow to produce a downloadable GitHub Actions ZIP artifact. A landlord uploads that ZIP through Bopli's **Upload release** form, which verifies, publishes, registers, and promotes the release.
 
 ## Theme conventions (protocol v1)
 
