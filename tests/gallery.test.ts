@@ -39,7 +39,9 @@ describe('Dev Cosmo gallery presentation', () => {
     it('defines wide, cropped, and responsive gallery layouts', () => {
         expect(themeCss).toContain('width: min(1200px, calc(100vw - 48px));');
         expect(themeCss).toContain('.article-body .bopli-gallery__row--3');
+        expect(themeCss).toContain('.article-body .bopli-gallery__row--1');
         expect(themeCss).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
+        expect(themeCss).toContain('aspect-ratio: 16 / 9;');
         expect(themeCss).toContain('object-fit: cover;');
         expect(themeCss).toContain('@media (max-width: 860px)');
         expect(themeCss).toContain('@media (max-width: 640px)');

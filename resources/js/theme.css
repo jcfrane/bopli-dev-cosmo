@@ -1131,6 +1131,10 @@ input {
     margin-top: 12px;
 }
 
+.article-body .bopli-gallery__row--1 {
+    grid-template-columns: 1fr;
+}
+
 .article-body .bopli-gallery__row--2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -1154,6 +1158,11 @@ input {
     aspect-ratio: 4 / 3;
     border-radius: 0;
     object-fit: cover;
+}
+
+.article-body .bopli-gallery__row--1 .bopli-gallery__image img {
+    max-height: 640px;
+    aspect-ratio: 16 / 9;
 }
 
 .article-body .bopli-gallery figcaption {
