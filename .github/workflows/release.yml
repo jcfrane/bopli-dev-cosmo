@@ -7,6 +7,6 @@ on:
 
 jobs:
   release:
-    uses: jcfrane/bopli-theme-toolkit/.github/workflows/release-theme.yml@v0.5.4
+    uses: jcfrane/bopli-theme-toolkit/.github/workflows/release-theme.yml@v0.6.0
     with:
-      toolkit-version: '0.5.4'
+      toolkit-version: '0.6.0'

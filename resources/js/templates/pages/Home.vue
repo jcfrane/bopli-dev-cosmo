@@ -11,10 +11,11 @@ import { useBopliQuery } from '@bopli/theme-sdk';
 import SiteLayout from '../../components/SiteLayout.vue';
 import TerminalWindow from '../../components/TerminalWindow.vue';
 import TreeListing from '../../components/TreeListing.vue';
+import type { HomeProps } from '../../.bopli/types';
 import { groupEntries, isoDate, primaryCategory } from '../../types';
-import type { CosmoEntry, CosmoHomeProps } from '../../types';
+import type { CosmoEntry } from '../../types';
 
-const props = defineProps<CosmoHomeProps>();
+const props = defineProps<HomeProps>();
 
 const featuredQuery = useBopliQuery<CosmoEntry>({
     source: 'blog.posts',

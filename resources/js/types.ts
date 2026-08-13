@@ -1,47 +1,11 @@
 import type {
-    BopliBlogIndexProps,
-    BopliBlogPostProps,
     BopliBlogPostSummary,
-    BopliEntryProps,
     BopliImage,
-    BopliPageProps,
-    BopliPublicEntry,
     BopliSite,
     BopliTerm,
-    BopliThemeSettings,
 } from '@bopli/theme-sdk';
 
 export type CosmoEntry = BopliBlogPostSummary;
-export type CosmoSettings = BopliThemeSettings & {
-    accent_color: string;
-    show_theme_toggle: boolean;
-    homepage_post_count: string;
-    author_portrait: BopliImage | null;
-};
-export type CosmoBlogIndexProps = BopliBlogIndexProps & { settings: CosmoSettings };
-export type CosmoBlogPostProps = BopliBlogPostProps & { settings: CosmoSettings };
-
-export type CosmoPostEntry = CosmoEntry & {
-    canonicalPath: string | null;
-    seoTitle: string | null;
-    seoDescription: string | null;
-    body: string;
-};
-
-export type CosmoPageProps = BopliPageProps<{ body?: string }> & { settings: CosmoSettings };
-
-export type CosmoProjectEntry = BopliPublicEntry<{
-    summary: string;
-    externalUrl?: string | null;
-}> & {
-    canonicalPath: string;
-    seoTitle: string;
-    seoDescription: string | null;
-};
-
-export type CosmoProjectProps = BopliEntryProps<CosmoProjectEntry> & { settings: CosmoSettings };
-
-export type CosmoHomeProps = BopliPageProps<{ body?: string }> & { settings: CosmoSettings };
 
 export type TreeGroup = {
     name: string;

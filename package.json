@@ -1,7 +1,7 @@
 {
     "name": "@bopli-theme/dev-cosmo",
     "private": true,
-    "version": "0.8.10",
+    "version": "0.8.11",
     "type": "module",
     "description": "The Dev Cosmo public theme for Boply.",
     "author": "Boply",
@@ -48,7 +48,8 @@
     "scripts": {
         "validate": "bopli-theme validate .",
         "test": "vitest run --environment jsdom",
-        "types:check": "vue-tsc --noEmit -p tsconfig.json",
+        "types": "bopli-theme types .",
+        "types:check": "npm run types && vue-tsc --noEmit -p tsconfig.json",
         "build": "npm run types:check && bopli-theme build .",
         "package": "npm run types:check && bopli-theme package .",
         "dev": "bopli-theme dev . --app ../bopli-app"

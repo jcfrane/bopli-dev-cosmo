@@ -11,10 +11,10 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import AuthorPortrait from '../../components/AuthorPortrait.vue';
 import SiteLayout from '../../components/SiteLayout.vue';
+import type { PostProps } from '../../.bopli/types';
 import { isoDate, postFileName, primaryCategory } from '../../types';
-import type { CosmoBlogPostProps } from '../../types';
 
-const props = defineProps<CosmoBlogPostProps>();
+const props = defineProps<PostProps>();
 
 const progress = ref(0);
 const articleBody = ref<HTMLElement | null>(null);

@@ -3,13 +3,13 @@ import type { BopliSite } from "@bopli/theme-sdk";
 import { computed } from "vue";
 
 import "../theme.css";
-import type { CosmoSettings } from "../types";
+import type { ThemeSettings } from "../.bopli/types";
 import DefaultFooter from "./footers/DefaultFooter.vue";
 import DefaultHeader from "./headers/DefaultHeader.vue";
 
 const props = defineProps<{
   site: BopliSite;
-  settings: CosmoSettings;
+  settings: ThemeSettings;
   currentPage: "home" | "about" | "blog" | null;
 }>();
 

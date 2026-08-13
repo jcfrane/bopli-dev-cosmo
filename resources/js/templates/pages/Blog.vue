@@ -12,10 +12,10 @@ import { computed, ref } from 'vue';
 import SiteLayout from '../../components/SiteLayout.vue';
 import TerminalWindow from '../../components/TerminalWindow.vue';
 import TreeListing from '../../components/TreeListing.vue';
+import type { BlogProps } from '../../.bopli/types';
 import { groupEntries, postFileName } from '../../types';
-import type { CosmoBlogIndexProps } from '../../types';
 
-const props = defineProps<CosmoBlogIndexProps>();
+const props = defineProps<BlogProps>();
 
 const query = ref(props.filters.q);
 const groups = computed(() => groupEntries(props.posts.data));

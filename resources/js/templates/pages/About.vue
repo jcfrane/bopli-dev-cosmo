@@ -9,9 +9,9 @@ import { computed } from "vue";
 
 import AuthorPortrait from "../../components/AuthorPortrait.vue";
 import SiteLayout from "../../components/SiteLayout.vue";
-import type { CosmoPageProps } from "../../types";
+import type { AboutProps } from "../../.bopli/types";
 
-const props = defineProps<CosmoPageProps>();
+const props = defineProps<AboutProps>();
 
 const paragraphs = computed(() =>
   String(props.page.fields.body ?? "")

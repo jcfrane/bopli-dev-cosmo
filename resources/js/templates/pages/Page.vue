@@ -9,9 +9,9 @@
 import { computed } from "vue";
 
 import SiteLayout from "../../components/SiteLayout.vue";
-import type { CosmoPageProps } from "../../types";
+import type { PageProps } from "../../.bopli/types";
 
-const props = defineProps<CosmoPageProps>();
+const props = defineProps<PageProps>();
 const paragraphs = computed(() =>
   String(props.page.fields.body ?? "")
     .split(/\n\s*\n/)

@@ -11,9 +11,9 @@
 
 <script setup lang="ts">
 import SiteLayout from "../../components/SiteLayout.vue";
-import type { CosmoProjectProps } from "../../types";
+import type { ProjectProps } from "../../.bopli/types";
 
-defineProps<CosmoProjectProps>();
+defineProps<ProjectProps>();
 </script>
 
 <template>
