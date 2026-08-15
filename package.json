@@ -52,7 +52,8 @@
         "types:check": "npm run types && vue-tsc --noEmit -p tsconfig.json",
         "build": "npm run types:check && bopli-theme build .",
         "package": "npm run types:check && bopli-theme package .",
-        "dev": "bopli-theme dev . --app ../bopli-app"
+        "dev": "bopli-theme dev .",
+        "dev:app": "bopli-theme dev . --app ../bopli-app"
     },
     "devDependencies": {
         "@bopli/theme-cli": "file:../bopli-theme-toolkit/packages/cli",
