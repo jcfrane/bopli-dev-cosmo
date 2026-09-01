@@ -6,14 +6,14 @@
 </bopli>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue';
 
-import SiteLayout from "../../components/SiteLayout.vue";
-import type { PageProps } from "../../.bopli/types";
+import SiteLayout from '../../components/SiteLayout.vue';
+import type { PageProps } from '../../.bopli/types';
 
 const props = defineProps<PageProps>();
 const paragraphs = computed(() =>
-  String(props.page.fields.body ?? "")
+  String(props.page.fields.body ?? '')
     .split(/\n\s*\n/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean),
@@ -29,9 +29,7 @@ const paragraphs = computed(() =>
         <p v-for="paragraph in paragraphs" :key="paragraph">
           {{ paragraph }}
         </p>
-        <p v-if="paragraphs.length === 0">
-          This page is ready for content from Bopli.
-        </p>
+        <p v-if="paragraphs.length === 0">This page is ready for content from Bopli.</p>
       </div>
     </main>
   </SiteLayout>

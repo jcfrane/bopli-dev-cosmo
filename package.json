@@ -1,73 +1,86 @@
 {
-    "name": "@bopli-theme/dev-cosmo",
-    "private": true,
-    "version": "0.8.11",
-    "type": "module",
-    "description": "The Dev Cosmo public theme for Boply.",
-    "author": "Boply",
-    "license": "MIT",
-    "bopli": {
-        "handle": "dev-cosmo",
-        "name": "Dev Cosmo",
-        "requires": "^0.1",
-        "colorModes": [
-            "light",
-            "dark"
+  "name": "@bopli-theme/dev-cosmo",
+  "private": true,
+  "version": "0.9.0",
+  "type": "module",
+  "description": "The Dev Cosmo public theme for Boply.",
+  "author": "Boply",
+  "license": "MIT",
+  "bopli": {
+    "handle": "dev-cosmo",
+    "name": "Dev Cosmo",
+    "requires": "^0.1",
+    "colorModes": [
+      "light",
+      "dark"
+    ],
+    "preview": "resources/images/dev-cosmo-preview.png",
+    "settings": {
+      "accent_color": {
+        "name": "Accent color",
+        "type": "color",
+        "description": "Color used for prompts, links, and interface highlights.",
+        "default": "#e95420"
+      },
+      "show_theme_toggle": {
+        "name": "Show theme toggle",
+        "type": "boolean",
+        "default": true
+      },
+      "homepage_post_count": {
+        "name": "Homepage post count",
+        "type": "select",
+        "options": [
+          "6",
+          "10",
+          "12"
         ],
-        "preview": "resources/images/dev-cosmo-preview.png",
-        "settings": {
-            "accent_color": {
-                "name": "Accent color",
-                "type": "color",
-                "description": "Color used for prompts, links, and interface highlights.",
-                "default": "#e95420"
-            },
-            "show_theme_toggle": {
-                "name": "Show theme toggle",
-                "type": "boolean",
-                "default": true
-            },
-            "homepage_post_count": {
-                "name": "Homepage post count",
-                "type": "select",
-                "options": [
-                    "6",
-                    "10",
-                    "12"
-                ],
-                "default": "10"
-            },
-            "author_portrait": {
-                "name": "Author portrait",
-                "type": "image",
-                "description": "Optional portrait used on About and Blog post pages.",
-                "default": null
-            }
-        }
-    },
-    "scripts": {
-        "validate": "bopli-theme validate .",
-        "test": "vitest run --environment jsdom",
-        "types": "bopli-theme types .",
-        "types:check": "npm run types && vue-tsc --noEmit -p tsconfig.json",
-        "build": "npm run types:check && bopli-theme build .",
-        "package": "npm run types:check && bopli-theme package .",
-        "dev": "bopli-theme dev .",
-        "dev:app": "bopli-theme dev . --app ../bopli-app"
-    },
-    "devDependencies": {
-        "@bopli/theme-cli": "file:../bopli-theme-toolkit/packages/cli",
-        "@bopli/theme-sdk": "file:../bopli-theme-toolkit/packages/sdk",
-        "jsdom": "^30.0.1",
-        "typescript": "^5.9.3",
-        "vite": "^8.0.0",
-        "vitest": "^4.1.10",
-        "vue": "^3.5.13",
-        "vue-tsc": "^2.2.4"
-    },
-    "dependencies": {
-        "@shikijs/langs": "^4.4.3",
-        "@shikijs/themes": "^4.4.3",
-        "shiki": "^4.4.3"
+        "default": "10"
+      },
+      "author_portrait": {
+        "name": "Author portrait",
+        "type": "image",
+        "description": "Optional portrait used on About and Blog post pages.",
+        "default": null
+      }
     }
+  },
+  "scripts": {
+    "check": "npm run lint && npm run format:check && npm run types:check && npm test",
+    "validate": "bopli-theme validate .",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run --environment jsdom",
+    "types": "bopli-theme types .",
+    "types:check": "npm run types && vue-tsc --noEmit -p tsconfig.json",
+    "build": "npm run check && bopli-theme build .",
+    "package": "npm run check && bopli-theme package .",
+    "dev": "bopli-theme dev .",
+    "dev:app": "bopli-theme dev . --app ../bopli-app"
+  },
+  "devDependencies": {
+    "@bopli/theme-cli": "0.9.0",
+    "@bopli/theme-sdk": "0.6.0",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.13.5",
+    "eslint": "^10.9.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.10.0",
+    "globals": "^17.11.0",
+    "jsdom": "^30.0.1",
+    "prettier": "^3.4.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.68.0",
+    "vite": "^8.0.0",
+    "vitest": "^4.1.10",
+    "vue": "^3.5.13",
+    "vue-eslint-parser": "^10.4.1",
+    "vue-tsc": "^2.2.4"
+  },
+  "dependencies": {
+    "@shikijs/langs": "^4.4.3",
+    "@shikijs/themes": "^4.4.3",
+    "shiki": "^4.4.3"
+  }
 }

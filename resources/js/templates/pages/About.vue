@@ -5,16 +5,16 @@
 </bopli>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue';
 
-import AuthorPortrait from "../../components/AuthorPortrait.vue";
-import SiteLayout from "../../components/SiteLayout.vue";
-import type { AboutProps } from "../../.bopli/types";
+import AuthorPortrait from '../../components/AuthorPortrait.vue';
+import SiteLayout from '../../components/SiteLayout.vue';
+import type { AboutProps } from '../../.bopli/types';
 
 const props = defineProps<AboutProps>();
 
 const paragraphs = computed(() =>
-  String(props.page.fields.body ?? "")
+  String(props.page.fields.body ?? '')
     .split(/\n\s*\n/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean),
@@ -22,9 +22,9 @@ const paragraphs = computed(() =>
 
 function displayUrl(url: string): string {
   return url
-    .replace(/^mailto:/, "")
-    .replace(/^https?:\/\//, "")
-    .replace(/\/$/, "");
+    .replace(/^mailto:/, '')
+    .replace(/^https?:\/\//, '')
+    .replace(/\/$/, '');
 }
 </script>
 
@@ -34,7 +34,11 @@ function displayUrl(url: string): string {
       <header class="about-header">
         <AuthorPortrait
           :source="settings.author_portrait?.url ?? site.owner?.profileImage?.url"
-          :alt="settings.author_portrait?.alt ?? site.owner?.profileImage?.alt ?? `Illustrated portrait of ${site.name}`"
+          :alt="
+            settings.author_portrait?.alt ??
+            site.owner?.profileImage?.alt ??
+            `Illustrated portrait of ${site.name}`
+          "
         />
         <div class="about-heading">
           <p class="about-prompt"><span>$</span> whoami</p>
@@ -46,9 +50,7 @@ function displayUrl(url: string): string {
         <p v-for="paragraph in paragraphs" :key="paragraph">
           {{ paragraph }}
         </p>
-        <p v-if="paragraphs.length === 0">
-          Add your biography from the Bopli Page editor.
-        </p>
+        <p v-if="paragraphs.length === 0">Add your biography from the Bopli Page editor.</p>
       </div>
 
       <template v-if="site.socialLinks?.length">
@@ -57,9 +59,7 @@ function displayUrl(url: string): string {
         <div class="contact-list">
           <div v-for="link in site.socialLinks" :key="link.url">
             <span class="contact-label">{{ link.label.toLowerCase() }}</span>
-            <a :href="link.url" rel="me noreferrer" target="_blank">{{
-              displayUrl(link.url)
-            }}</a>
+            <a :href="link.url" rel="me noreferrer" target="_blank">{{ displayUrl(link.url) }}</a>
           </div>
         </div>
       </template>

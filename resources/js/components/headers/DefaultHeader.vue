@@ -1,31 +1,20 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-
-type Theme = "light" | "dark";
+import { useBopliColorMode } from '@bopli/theme-sdk';
 
 defineProps<{
   site: { name: string; handle: string };
-  currentPage: "home" | "about" | "blog" | null;
+  currentPage: 'home' | 'about' | 'blog' | null;
   showThemeToggle: boolean;
 }>();
 
-const theme = ref<Theme>("light");
-
-function applyTheme(nextTheme: Theme): void {
-  theme.value = nextTheme;
-  document.documentElement.dataset.theme = nextTheme;
-}
+const { mode, modes, setMode } = useBopliColorMode();
 
 function toggleTheme(): void {
-  const nextTheme = theme.value === "dark" ? "light" : "dark";
-  localStorage.setItem("blog-theme", nextTheme);
-  applyTheme(nextTheme);
-}
+  const current = modes.indexOf(mode.value);
+  const next = modes[(current + 1) % modes.length];
 
-onMounted(() => {
-  const savedTheme = localStorage.getItem("blog-theme");
-  applyTheme(savedTheme === "dark" ? "dark" : "light");
-});
+  if (next) setMode(next);
+}
 </script>
 
 <template>
@@ -35,28 +24,18 @@ onMounted(() => {
     </a>
     <div class="nav-actions">
       <div class="nav-links">
-        <a href="/" :aria-current="currentPage === 'home' ? 'page' : undefined"
-          >Home</a
-        >
-        <a
-          href="/about"
-          :aria-current="currentPage === 'about' ? 'page' : undefined"
-          >About</a
-        >
-        <a
-          href="/blog"
-          :aria-current="currentPage === 'blog' ? 'page' : undefined"
-          >Blogs</a
-        >
+        <a href="/" :aria-current="currentPage === 'home' ? 'page' : undefined">Home</a>
+        <a href="/about" :aria-current="currentPage === 'about' ? 'page' : undefined">About</a>
+        <a href="/blog" :aria-current="currentPage === 'blog' ? 'page' : undefined">Blogs</a>
       </div>
       <button
         v-if="showThemeToggle"
         class="theme-toggle"
         type="button"
-        :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
+        :aria-label="`Switch from ${mode} color mode`"
         @click="toggleTheme"
       >
-        --theme={{ theme }}
+        --theme={{ mode }}
       </button>
     </div>
   </nav>

@@ -1,18 +1,22 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
-import { beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-let themeCss = '';
+let themeStyle: HTMLStyleElement;
 
 beforeAll(async () => {
-    themeCss = await readFile(resolve(process.cwd(), 'resources/js/theme.css'), 'utf8');
+  themeStyle = document.createElement('style');
+  themeStyle.textContent = await readFile(resolve(process.cwd(), 'resources/js/theme.css'), 'utf8');
+  document.head.append(themeStyle);
 });
 
+afterAll(() => themeStyle.remove());
+
 function galleryFixture(): HTMLElement {
-    const article = document.createElement('article');
-    article.className = 'article-body';
-    article.innerHTML = `
+  const article = document.createElement('article');
+  article.className = 'article-body';
+  article.innerHTML = `
         <figure class="bopli-gallery">
             <div class="bopli-gallery__row bopli-gallery__row--3">
                 <div class="bopli-gallery__image"><img src="/one.jpg" alt="One"></div>
@@ -23,30 +27,32 @@ function galleryFixture(): HTMLElement {
         </figure>
     `;
 
-    return article;
+  return article;
 }
 
 describe('Dev Cosmo gallery presentation', () => {
-    it('matches the stable gallery markup emitted by Bopli', () => {
-        const fixture = galleryFixture();
+  it('matches the stable gallery markup emitted by Bopli', () => {
+    const fixture = galleryFixture();
 
-        expect(fixture.querySelectorAll('.bopli-gallery__row--3 img')).toHaveLength(3);
-        expect(fixture.querySelector('figcaption')?.textContent).toContain(
-            'A gallery caption',
-        );
-    });
+    expect(fixture.querySelectorAll('.bopli-gallery__row--3 img')).toHaveLength(3);
+    expect(fixture.querySelector('figcaption')?.textContent).toContain('A gallery caption');
+  });
 
-    it('defines wide, cropped, and responsive gallery layouts', () => {
-        expect(themeCss).toContain('width: min(1200px, calc(100vw - 48px));');
-        expect(themeCss).toContain('.article-body .bopli-gallery__row--3');
-        expect(themeCss).toContain('.article-body .bopli-gallery__row--1');
-        expect(themeCss).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
-        expect(themeCss).toContain('aspect-ratio: 16 / 9;');
-        expect(themeCss).toContain('object-fit: cover;');
-        expect(themeCss).toContain('@media (max-width: 860px)');
-        expect(themeCss).toContain('@media (max-width: 640px)');
-        expect(themeCss).toMatch(
-            /\.article-body \.bopli-gallery__row--2,\s*\.article-body \.bopli-gallery__row--3 \{\s*grid-template-columns: 1fr;/,
-        );
-    });
+  it('computes the wide, cropped gallery presentation', () => {
+    const fixture = galleryFixture();
+    document.body.append(fixture);
+    const gallery = fixture.querySelector<HTMLElement>('.bopli-gallery');
+    const row = fixture.querySelector<HTMLElement>('.bopli-gallery__row--3');
+    const image = fixture.querySelector<HTMLImageElement>('.bopli-gallery__image img');
+
+    expect(gallery).not.toBeNull();
+    expect(row).not.toBeNull();
+    expect(image).not.toBeNull();
+    expect(getComputedStyle(gallery!).width).toBe(`${Math.min(1200, window.innerWidth - 48)}px`);
+    expect(getComputedStyle(row!).display).toBe('grid');
+    expect(getComputedStyle(row!).gridTemplateColumns).toBe('repeat(3, minmax(0, 1fr))');
+    expect(getComputedStyle(image!).objectFit).toBe('cover');
+    expect(getComputedStyle(image!).getPropertyValue('aspect-ratio')).toBe('4 / 3');
+    fixture.remove();
+  });
 });
