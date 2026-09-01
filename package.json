@@ -60,7 +60,7 @@
     "dev:app": "bopli-theme dev . --app ../bopli-app"
   },
   "devDependencies": {
-    "@bopli/theme-cli": "0.9.0",
+    "@bopli/theme-cli": "0.9.1",
     "@bopli/theme-sdk": "0.6.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^22.13.5",
