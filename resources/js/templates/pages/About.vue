@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+import AuthorPortrait from '../../components/AuthorPortrait.vue';
 import SiteLayout from '../../components/SiteLayout.vue';
 import type { AboutProps } from '../../.bopli/types';
+import { resolveAuthorPortrait } from '../../types';
 
 const props = defineProps<AboutProps>();
 
@@ -21,6 +23,9 @@ const timeline = computed(() =>
   (props.page.fields.timeline ?? []).filter(
     (item) => item.year.trim() !== '' || item.description.trim() !== '',
   ),
+);
+const authorPortrait = computed(() =>
+  resolveAuthorPortrait(props.site, props.settings.author_portrait),
 );
 
 function timelineGlyph(index: number): string {
@@ -47,6 +52,7 @@ function displayUrl(url: string): string {
   <SiteLayout :site="site" :settings="settings" current-page="about">
     <main class="about-main">
       <header class="about-header">
+        <AuthorPortrait :source="authorPortrait.source" :alt="authorPortrait.alt" />
         <div class="about-heading">
           <p class="about-prompt"><span>$</span> whoami</p>
           <h1>{{ page.title }}</h1>

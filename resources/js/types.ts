@@ -40,3 +40,13 @@ export function groupEntries(entries: CosmoEntry[]): TreeGroup[] {
 export function primaryCategory(entry: CosmoEntry): BopliTerm | undefined {
   return entry.categories[0];
 }
+
+export function resolveAuthorPortrait(
+  site: BopliSite,
+  override?: BopliImage | null,
+): { source?: string; alt: string } {
+  return {
+    source: override?.url ?? site.owner?.profileImage?.url,
+    alt: override?.alt ?? site.owner?.profileImage?.alt ?? `Illustrated portrait of ${site.name}`,
+  };
+}

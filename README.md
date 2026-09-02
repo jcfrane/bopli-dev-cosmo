@@ -1,6 +1,6 @@
 # Dev Cosmo
 
-Dev Cosmo is the first public-facing theme for Boply and the initial theme for jcfrane's personal site. Bopli is the platform's development codename and remains in technical package and protocol names. Dev Cosmo is deliberately independent from Bopli's fixed administration interface. Version 0.9.2 implements the protocol-v1 Page, Entry, reactive theme-query, host-owned color-mode, generated settings/field types, starter-content, native Blog, public Site Owner, in-memory server-rendering, highlighted code-block, responsive gallery, and typed Page-field contracts with the Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, setting-derived accent tokens, terminal-style content discovery, a WYSIWYG Biography, and an editorial article surface.
+Dev Cosmo is the first public-facing theme for Boply and the initial theme for jcfrane's personal site. Bopli is the platform's development codename and remains in technical package and protocol names. Dev Cosmo is deliberately independent from Bopli's fixed administration interface. Version 0.9.3 implements the protocol-v1 Page, Entry, reactive theme-query, host-owned color-mode, generated settings/field types, starter-content, native Blog, public Site Owner, in-memory server-rendering, highlighted code-block, responsive gallery, and typed Page-field contracts with the Cosmic Terminal design system: Ubuntu typography, light and aubergine-dark modes, setting-derived accent tokens, terminal-style content discovery, a WYSIWYG Biography with the Site Owner portrait, and an editorial article surface.
 
 The production browser entry keeps code highlighting out of the initial path and loads Shiki only when the first code block approaches the viewport. Ubuntu fonts are separate immutable release assets instead of base64 payloads inside the render-blocking stylesheet, and primary Home/Post images carry high fetch priority.
 
@@ -49,7 +49,7 @@ There is no manifest file. The platform derives everything from the repository:
 - `templates/pages/Home.vue` (`home`) — featured-post hero and a collapsible filesystem-style latest-post tree driven by direct `blog.posts` queries.
 - `templates/pages/Page.vue` (`page`) — default general-purpose Page layout.
 - `templates/pages/Blog.vue` (`blog`, `blog_index`) — URL-driven search, category, tag, and paginated archive grouped by projected Categories.
-- `templates/pages/About.vue` (`about`) — Bopli-authored Page title and body in the Cosmic Terminal layout.
+- `templates/pages/About.vue` (`about`) — Bopli-authored Page title and body with the resolved Site Owner portrait in the Cosmic Terminal layout.
 - `templates/entries/Project.vue` (`project`) — default generic Entry layout using `summary` and `externalUrl` projections.
 - `templates/entries/Post.vue` (`post`, `blog_post`) — reading progress, cover image, server-sanitized rich-text body, author card, and adjacent-post navigation.
 

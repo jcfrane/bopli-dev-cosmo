@@ -4,13 +4,16 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import AuthorPortrait from '../../components/AuthorPortrait.vue';
 import SiteLayout from '../../components/SiteLayout.vue';
 import type { PostProps } from '../../.bopli/types';
-import { isoDate, postFileName, primaryCategory } from '../../types';
+import { isoDate, postFileName, primaryCategory, resolveAuthorPortrait } from '../../types';
 
 const props = defineProps<PostProps>();
 
 const progress = ref(0);
 const articleBody = ref<HTMLElement | null>(null);
 const category = computed(() => primaryCategory(props.post));
+const authorPortrait = computed(() =>
+  resolveAuthorPortrait(props.site, props.settings.author_portrait),
+);
 let disposeCodeBlocks = (): void => {};
 let codeObserver: IntersectionObserver | undefined;
 let enhancementRun = 0;
@@ -139,15 +142,7 @@ onBeforeUnmount(() => {
         <hr class="comet-divider" />
 
         <div class="author-card">
-          <AuthorPortrait
-            size="avatar"
-            :source="settings.author_portrait?.url ?? site.owner?.profileImage?.url"
-            :alt="
-              settings.author_portrait?.alt ??
-              site.owner?.profileImage?.alt ??
-              `Illustrated portrait of ${site.name}`
-            "
-          />
+          <AuthorPortrait size="avatar" :source="authorPortrait.source" :alt="authorPortrait.alt" />
           <div class="author-card-copy">
             <strong
               >Written by the resident of <span><span>~</span>/blog</span></strong
