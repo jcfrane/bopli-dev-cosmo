@@ -1,11 +1,3 @@
-<bopli lang="json">
-{
-  "name": "Cosmic Terminal post",
-  "kind": "blog_post",
-  "default": true
-}
-</bopli>
-
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 

@@ -1,11 +1,3 @@
-<bopli lang="json">
-{
-  "name": "Cosmic Terminal blog",
-  "kind": "blog_index",
-  "default": true
-}
-</bopli>
-
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 

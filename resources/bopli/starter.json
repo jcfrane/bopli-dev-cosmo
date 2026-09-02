@@ -77,9 +77,7 @@
       "path": "/about",
       "template": "about",
       "status": "published",
-      "data": {
-        "body": "Write a short introduction about yourself, your work, and what visitors can expect to find here.\n\nYou can edit this content at any time from the Bopli Page editor."
-      }
+      "data": {}
     }
   ],
   "blog": { "enabled": true }

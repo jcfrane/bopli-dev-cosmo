@@ -1,10 +1,3 @@
-<bopli lang="json">
-{
-  "name": "Cosmic Terminal page",
-  "default": true
-}
-</bopli>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 

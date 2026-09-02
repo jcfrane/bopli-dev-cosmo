@@ -1,9 +1,3 @@
-<bopli lang="json">
-{
-  "name": "Cosmic Terminal home"
-}
-</bopli>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useBopliQuery } from '@bopli/theme-sdk';

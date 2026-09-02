@@ -1,14 +1,3 @@
-<bopli lang="json">
-{
-  "name": "Cosmic Terminal project",
-  "default": true,
-  "fields": {
-    "summary": { "name": "Summary", "type": "long_text", "required": true },
-    "externalUrl": { "name": "External URL", "type": "short_text" }
-  }
-}
-</bopli>
-
 <script setup lang="ts">
 import SiteLayout from '../../components/SiteLayout.vue';
 import type { ProjectProps } from '../../.bopli/types';
