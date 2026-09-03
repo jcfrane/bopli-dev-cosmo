@@ -789,6 +789,14 @@ input {
   line-height: 1.12;
 }
 
+.post-standfirst {
+  max-width: 58ch;
+  margin: 0 0 20px;
+  color: var(--color-text-muted);
+  font-size: 19px;
+  line-height: 1.55;
+}
+
 .post-meta-row,
 .post-tags {
   display: flex;

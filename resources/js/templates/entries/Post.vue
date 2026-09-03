@@ -109,6 +109,7 @@ onBeforeUnmount(() => {
         </div>
 
         <h1 class="post-title">{{ post.title }}</h1>
+        <p v-if="post.excerpt" class="post-standfirst">{{ post.excerpt }}</p>
         <div class="post-meta-row">
           <div class="post-meta">
             {{ isoDate(post.publishedAt)
