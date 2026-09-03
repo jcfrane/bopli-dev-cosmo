@@ -1,6 +1,16 @@
 <script setup lang="ts">
+import { defineEntryTemplate, field } from '@bopli/theme-sdk/authoring';
 import SiteLayout from '../../components/SiteLayout.vue';
 import type { ProjectProps } from '../../.bopli/types';
+
+defineEntryTemplate({
+  name: 'Cosmic Terminal project',
+  default: true,
+  fields: {
+    summary: field.longText({ required: true }),
+    externalUrl: field.text({ label: 'External URL' }),
+  },
+});
 
 defineProps<ProjectProps>();
 </script>

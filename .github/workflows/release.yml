@@ -7,4 +7,4 @@ on:
 
 jobs:
   release:
-    uses: jcfrane/bopli-theme-toolkit/.github/workflows/release-theme.yml@theme-cli-v0.10.1
+    uses: jcfrane/bopli-theme-toolkit/.github/workflows/release-theme.yml@theme-cli-v0.11.0

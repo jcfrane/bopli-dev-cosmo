@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { definePageTemplate, field } from '@bopli/theme-sdk/authoring';
 import { computed } from 'vue';
 import { useBopliQuery } from '@bopli/theme-sdk';
 
@@ -8,6 +9,13 @@ import TreeListing from '../../components/TreeListing.vue';
 import type { HomeProps } from '../../.bopli/types';
 import { groupEntries, isoDate, primaryCategory } from '../../types';
 import type { CosmoEntry } from '../../types';
+
+definePageTemplate({
+  name: 'Cosmic Terminal home',
+  fields: {
+    body: field.longText(),
+  },
+});
 
 const props = defineProps<HomeProps>();
 

@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import { defineBlogPostTemplate } from '@bopli/theme-sdk/authoring';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 import AuthorPortrait from '../../components/AuthorPortrait.vue';
 import SiteLayout from '../../components/SiteLayout.vue';
 import type { PostProps } from '../../.bopli/types';
 import { isoDate, postFileName, primaryCategory, resolveAuthorPortrait } from '../../types';
+
+defineBlogPostTemplate({
+  name: 'Cosmic Terminal post',
+  default: true,
+});
 
 const props = defineProps<PostProps>();
 

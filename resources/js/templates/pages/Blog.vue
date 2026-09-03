@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { defineBlogIndexTemplate } from '@bopli/theme-sdk/authoring';
 import { computed, ref } from 'vue';
 
 import SiteLayout from '../../components/SiteLayout.vue';
@@ -6,6 +7,11 @@ import TerminalWindow from '../../components/TerminalWindow.vue';
 import TreeListing from '../../components/TreeListing.vue';
 import type { BlogProps } from '../../.bopli/types';
 import { groupEntries, postFileName } from '../../types';
+
+defineBlogIndexTemplate({
+  name: 'Cosmic Terminal blog',
+  default: true,
+});
 
 const props = defineProps<BlogProps>();
 

@@ -1,8 +1,17 @@
 <script setup lang="ts">
+import { definePageTemplate, field } from '@bopli/theme-sdk/authoring';
 import { computed } from 'vue';
 
 import SiteLayout from '../../components/SiteLayout.vue';
 import type { PageProps } from '../../.bopli/types';
+
+definePageTemplate({
+  name: 'Cosmic Terminal page',
+  default: true,
+  fields: {
+    body: field.longText(),
+  },
+});
 
 const props = defineProps<PageProps>();
 const paragraphs = computed(() =>
