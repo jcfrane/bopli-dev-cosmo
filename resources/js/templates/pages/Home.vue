@@ -38,7 +38,7 @@ const featuredCategory = computed(() =>
 </script>
 
 <template>
-  <SiteLayout :site="site" :settings="settings" current-page="home">
+  <SiteLayout :site="site" :settings="settings" :footer="footer" current-page="home">
     <header class="home-hero">
       <div class="hero-starfield" />
       <div class="hero-orbit" />

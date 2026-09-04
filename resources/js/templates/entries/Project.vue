@@ -16,7 +16,7 @@ defineProps<ProjectProps>();
 </script>
 
 <template>
-  <SiteLayout :site="site" :settings="settings" :current-page="null">
+  <SiteLayout :site="site" :settings="settings" :footer="footer" :current-page="null">
     <main class="about-main">
       <p class="about-prompt"><span>$</span> project --show</p>
       <h1 class="page-title">{{ entry.title }}</h1>

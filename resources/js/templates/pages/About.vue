@@ -4,6 +4,7 @@ import { computed } from 'vue';
 
 import AuthorPortrait from '../../components/AuthorPortrait.vue';
 import SiteLayout from '../../components/SiteLayout.vue';
+import SocialIcon from '../../components/SocialIcon.vue';
 import type { AboutProps } from '../../.bopli/types';
 import { resolveAuthorPortrait } from '../../types';
 
@@ -70,7 +71,7 @@ function displayUrl(url: string): string {
 </script>
 
 <template>
-  <SiteLayout :site="site" :settings="settings" current-page="about">
+  <SiteLayout :site="site" :settings="settings" :footer="footer" current-page="about">
     <main class="about-main">
       <header class="about-header">
         <AuthorPortrait :source="authorPortrait.source" :alt="authorPortrait.alt" />
@@ -115,7 +116,9 @@ function displayUrl(url: string): string {
         <h2 class="section-title"><span>$</span> say hello</h2>
         <div class="contact-list">
           <div v-for="link in site.socialLinks" :key="link.url">
-            <span class="contact-label">{{ link.label.toLowerCase() }}</span>
+            <span class="contact-label"
+              ><SocialIcon :label="link.label" />{{ link.label.toLowerCase() }}</span
+            >
             <a :href="link.url" rel="me noreferrer" target="_blank">{{ displayUrl(link.url) }}</a>
           </div>
         </div>

@@ -1,7 +1,7 @@
 {
   "name": "@bopli-theme/dev-cosmo",
   "private": true,
-  "version": "0.9.5",
+  "version": "0.10.0",
   "type": "module",
   "description": "The Dev Cosmo public theme for Boply.",
   "author": "Boply",
@@ -60,8 +60,8 @@
     "dev:app": "bopli-theme dev . --app ../bopli-app"
   },
   "devDependencies": {
-    "@bopli/theme-cli": "0.11.0",
-    "@bopli/theme-sdk": "0.7.0",
+    "@bopli/theme-cli": "0.12.0",
+    "@bopli/theme-sdk": "0.8.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^22.13.5",
     "eslint": "^10.9.1",

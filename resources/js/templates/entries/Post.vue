@@ -95,7 +95,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <SiteLayout :site="site" :settings="settings" current-page="blog">
+  <SiteLayout :site="site" :settings="settings" :footer="footer" current-page="blog">
     <div
       class="reading-progress"
       role="progressbar"

@@ -278,6 +278,9 @@ input {
 }
 
 .footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--color-text-muted);
 }
 
@@ -1416,7 +1419,16 @@ input {
 }
 
 .contact-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--color-text-faint);
+}
+
+.social-icon {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
 }
 
 @media (max-width: 860px) {

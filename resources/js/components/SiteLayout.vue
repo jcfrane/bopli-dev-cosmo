@@ -3,13 +3,14 @@ import type { BopliSite } from '@bopli/theme-sdk';
 import { computed } from 'vue';
 
 import '../theme.css';
-import type { ThemeSettings } from '../.bopli/types';
+import type { ThemeFooter, ThemeSettings } from '../.bopli/types';
 import DefaultFooter from './footers/DefaultFooter.vue';
 import DefaultHeader from './headers/DefaultHeader.vue';
 
 const props = defineProps<{
   site: BopliSite;
   settings: ThemeSettings;
+  footer: ThemeFooter;
   currentPage: 'home' | 'about' | 'blog' | null;
 }>();
 
@@ -33,8 +34,8 @@ const themeStyle = computed(() => ({
       />
     </slot>
     <slot />
-    <slot name="footer" :site="site">
-      <DefaultFooter :social-links="site.socialLinks" />
+    <slot name="footer" :site="site" :footer="footer">
+      <DefaultFooter :footer="footer" :social-links="site.socialLinks" />
     </slot>
   </div>
 </template>
