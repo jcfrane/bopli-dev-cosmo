@@ -1713,3 +1713,20 @@ input {
     transition-duration: 0.01ms !important;
   }
 }
+
+.author-initials {
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  background: var(--color-surface-raised);
+}
+.author-card-copy {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.author-bio {
+  white-space: pre-line;
+}
+.author-bio + a {
+  margin-inline-start: 0.3em;
+}

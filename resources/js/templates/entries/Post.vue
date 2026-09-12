@@ -1,24 +1,42 @@
 <script setup lang="ts">
+import type { BopliImage } from '@bopli/theme-sdk';
 import { defineBlogPostTemplate } from '@bopli/theme-sdk/authoring';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
-import AuthorPortrait from '../../components/AuthorPortrait.vue';
 import SiteLayout from '../../components/SiteLayout.vue';
 import type { PostProps } from '../../.bopli/types';
-import { isoDate, postFileName, primaryCategory, resolveAuthorPortrait } from '../../types';
+import { isoDate, postFileName, primaryCategory } from '../../types';
 
 defineBlogPostTemplate({
   name: 'Cosmic Terminal post',
   default: true,
 });
 
+// Optional host extension until the published SDK includes creator profiles.
+type PostAuthor = {
+  name: string;
+  profileImage: BopliImage | null;
+  bio: string | null;
+  bioHtml?: string | null;
+  link: { url: string; label: string } | null;
+};
 const props = defineProps<PostProps>();
+const author = computed(
+  () => (props.post as PostProps['post'] & { author?: PostAuthor | null }).author,
+);
 
 const progress = ref(0);
 const articleBody = ref<HTMLElement | null>(null);
 const category = computed(() => primaryCategory(props.post));
-const authorPortrait = computed(() =>
-  resolveAuthorPortrait(props.site, props.settings.author_portrait),
+const authorInitials = computed(
+  () =>
+    author.value?.name
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((part) => part[0])
+      .join('')
+      .toUpperCase() ?? '',
 );
 let disposeCodeBlocks = (): void => {};
 let codeObserver: IntersectionObserver | undefined;
@@ -148,16 +166,26 @@ onBeforeUnmount(() => {
 
         <hr class="comet-divider" />
 
-        <div class="author-card">
-          <AuthorPortrait size="avatar" :source="authorPortrait.source" :alt="authorPortrait.alt" />
+        <div v-if="author" class="author-card">
+          <img
+            v-if="author.profileImage"
+            class="author-portrait author-portrait-avatar"
+            :src="author.profileImage.url"
+            :alt="author.profileImage.alt ?? author.name"
+          />
+          <span
+            v-else
+            class="author-portrait author-portrait-avatar author-initials"
+            aria-hidden="true"
+            >{{ authorInitials }}</span
+          >
           <div class="author-card-copy">
-            <strong
-              >Written by the resident of <span><span>~</span>/blog</span></strong
-            >
-            <p>
-              {{ site.description ?? 'Backend engineer, amateur astronomer, dotfiles archivist.' }}
-              <a href="/about">more --about →</a>
-            </p>
+            <strong>Written by {{ author.name }}</strong>
+            <div v-if="author.bio || author.link">
+              <div v-if="author.bioHtml" class="author-bio" v-html="author.bioHtml" />
+              <span v-else-if="author.bio" class="author-bio">{{ author.bio }}</span>
+              <a v-if="author.link" :href="author.link.url">{{ author.link.label }} →</a>
+            </div>
           </div>
         </div>
 
@@ -176,3 +204,23 @@ onBeforeUnmount(() => {
     </main>
   </SiteLayout>
 </template>
+
+<style scoped>
+.author-bio :deep(p + p) {
+  margin-top: 0.5em;
+}
+.author-bio :deep(ul) {
+  list-style: disc;
+  padding-left: 1.5em;
+}
+.author-bio :deep(ol) {
+  list-style: decimal;
+  padding-left: 1.5em;
+}
+.author-bio :deep(strong) {
+  font-weight: 700;
+}
+.author-bio :deep(em) {
+  font-style: italic;
+}
+</style>
